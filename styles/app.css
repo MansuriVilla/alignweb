@@ -1,0 +1,221 @@
+
+
+@import "tailwindcss";
+@theme {
+  --color-primary: #8E9867;
+  --color-success: #9CAF55;
+  --color-danger: #FF3232;
+  --color-warning: #FAFD87;
+  --color-info: #17a2b8;
+  
+  --color-beige-50: #FCFAF7;
+  --color-beige-100: #F8F3EC;
+  --color-beige-200: #FCEFDE;
+  --color-beige-300: #EDE6DB;
+  --color-beige-400: #FCEAD3;
+  --color-beige-500: #EED9BE;
+
+  --color-mint-50: #E8F7DA;
+  --color-mint-100: #C2DBAA;
+
+  --color-sage-50: #F9F9F9;
+
+  --color-cocoa: #0D0503;
+  --color-ash: #6C6C6C;
+  --color-olive: #70A766;
+
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-header: "Playfair Display", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --shadow-custom: 0px 7.26316px 121.053px rgba(0, 0, 0, 0.06);
+  --shadow-icon: 0px 7.27px 58.18px 0px #0000000D;
+  --shadow-card: 0px 7.26316px 121.053px rgba(0, 0, 0, 0.06);
+  --shadow-custom-inset: 0px 0px 3px 0px #00000040 inset;
+
+  --background-image-mint: linear-gradient(167.88deg, #E8F7DA 19.92%, #C2DBAA 96.99%);
+  --background-image-sea: linear-gradient(168.85deg, #EBF3F2 13.54%, #D1E8E6 54.71%);
+  --background-image-yellow: linear-gradient(168.85deg, #F8F3EC 13.54%, #FFEDD6 54.71%);
+  --background-image-pinky: linear-gradient(180deg, #FCF2F5 0%, #FFDDE9 100%);
+  --background-image-beige-45: linear-gradient(121.45deg, #F8F3EC 14.79%, #FCEFDE 90.86%);
+  --background-image-glass-gradient: linear-gradient(163.54deg, rgba(255, 255, 255, 0.24) 2.93%, rgba(255, 255, 255, 0.18) 99.99%);
+  --background-image-green: linear-gradient(126.41deg, #E9F9D8 28.26%, #C2DBAA 100%);
+  --background-image-blue-gradient: linear-gradient(121.45deg, #EBF3F2 14.79%, #D1E8E6 90.86%);
+  --background-image-yellow-gradient: linear-gradient(121.45deg, #F8F3EC 14.79%, #FFEDD6 90.86%);
+}
+.bg-glass {
+    background: linear-gradient(
+        163.54deg,
+        rgba(255, 255, 255, 0.24) 2.93%,
+        rgba(255, 255, 255, 0.18) 99.99%
+    );
+    box-shadow: 0px 7.26316px 121.053px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(36.3158px);
+}
+
+.bg-glass-2 {
+    background: linear-gradient(
+        163.54deg,
+        rgba(255, 255, 255, 0.24) 2.93%,
+        rgba(255, 255, 255, 0.18) 99.99%
+    );
+    opacity: 0.8;
+    box-shadow: 0px 7.26316px 121.053px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(36.3158px);
+}
+
+button,
+a {
+    cursor: pointer;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    margin: auto;
+    position: relative;
+}
+
+.loader:before {
+    content: "";
+    width: 48px;
+    height: 5px;
+    background: #f0808050;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    border-radius: 50%;
+    animation: shadow324 0.5s linear infinite;
+}
+
+.loader:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: #f08080;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 4px;
+    animation: jump7456 0.5s linear infinite;
+}
+
+
+
+.sticky-header-placeholder {
+    transition: height 0.2s ease;
+}
+
+/* Prevent flash of wrong state */
+[data-header="smart-sticky"],
+[data-header="sticky"] {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+        .blur-mask-1 {
+            mask-image: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0) 0%,
+                    rgb(0, 0, 0) 12.5%,
+                    rgb(0, 0, 0) 25%,
+                    rgba(0, 0, 0, 0) 37.5%);
+        }
+
+        .blur-mask-2 {
+            mask-image: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0) 12.5%,
+                    rgb(0, 0, 0) 25%,
+                    rgb(0, 0, 0) 37.5%,
+                    rgba(0, 0, 0, 0) 50%);
+        }
+
+        .blur-mask-3 {
+            mask-image: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0) 25%,
+                    rgb(0, 0, 0) 37.5%,
+                    rgb(0, 0, 0) 50%,
+                    rgba(0, 0, 0, 0) 62.5%);
+        }
+
+        .blur-mask-4 {
+            mask-image: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0) 37.5%,
+                    rgb(0, 0, 0) 50%,
+                    rgb(0, 0, 0) 62.5%,
+                    rgba(0, 0, 0, 0) 75%);
+        }
+
+        .blur-mask-5 {
+            mask-image: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0) 50%,
+                    rgb(0, 0, 0) 62.5%,
+                    rgb(0, 0, 0) 75%,
+                    rgba(0, 0, 0, 0) 87.5%);
+        }
+
+        .blur-mask-6 {
+            mask-image: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0) 62.5%,
+                    rgb(0, 0, 0) 75%,
+                    rgb(0, 0, 0) 87.5%,
+                    rgba(0, 0, 0, 0) 100%);
+        }
+
+        .blur-mask-7 {
+            mask-image: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0) 75%,
+                    rgb(0, 0, 0) 87.5%,
+                    rgb(0, 0, 0) 100%);
+        }
+
+        .blur-mask-8 {
+            mask-image: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0) 87.5%,
+                    rgb(0, 0, 0) 100%);
+        }
+
+@keyframes jump7456 {
+    15% {
+        border-bottom-right-radius: 3px;
+    }
+
+    25% {
+        transform: translateY(9px) rotate(22.5deg);
+    }
+
+    50% {
+        transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+        border-bottom-right-radius: 40px;
+    }
+
+    75% {
+        transform: translateY(9px) rotate(67.5deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(90deg);
+    }
+}
+
+@keyframes shadow324 {
+    0%,
+    100% {
+        transform: scale(1, 1);
+    }
+
+    50% {
+        transform: scale(1.2, 1);
+    }
+}
+
+.iti {
+    width: 100% !important;
+}
+
+.iti input {
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+.loading {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
