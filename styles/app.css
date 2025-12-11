@@ -172,6 +172,11 @@ a {
                     rgb(0, 0, 0) 100%);
         }
 
+
+        .current_page{
+            border-bottom: 2px solid var(--color-primary);
+        }
+
 @keyframes jump7456 {
     15% {
         border-bottom-right-radius: 3px;
