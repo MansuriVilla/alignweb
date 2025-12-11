@@ -391,8 +391,8 @@ function initStagerItemAnimation() {
     staggerItems.forEach((item) => {
         ScrollTrigger.create({
             trigger: item,
-            start: "top 60%",
-            end: "top 20%",
+            start: "50% 85%",
+            end: "50% 70%",
             scrub: true,
             animation: gsap.from(item, {
                 opacity: 0,
@@ -402,7 +402,7 @@ function initStagerItemAnimation() {
                 duration: 1,
                 ease: "power2.out",
             }),
-            markers: false,
+            markers: true,
             invalidateOnRefresh: true
         });
     });
@@ -411,18 +411,11 @@ function initStagerItemAnimation() {
 
 
 function initProgressLineAnimation() {
-
-
-
-
-    // Target your existing data-scroll-line element
     const progressLine = document.querySelector("[data-scroll-line]");
 
-    // Make sure it starts at height 0 and grows from the top
     gsap.set(progressLine, {
-        height: "180-px",
+        height: "180px",
         top: 0,
-        y: 0,
         transformOrigin: "top center"
     });
 
@@ -431,19 +424,19 @@ function initProgressLineAnimation() {
         start: "top 40%",
         end: "bottom 40%",
         scrub: true,
-
-
         markers: false,
 
-        onUpdate: (self) => {
-            const progress = self.progress;
+        // This is the magic: animate from current height (180px) to 100%
+        animation: gsap.to(progressLine, {
+            height: "100%",
+            ease: "none",
+            paused: true
+        }),
 
-            gsap.to(progressLine, {
-                height: `${progress * 100}%`,
-                ease: "none",
-                overwrite: true
-            });
+        onUpdate: (self) => {
+            // self.progress = 0   → playhead at start → stays 180px
+            // self.progress = 1   → playhead at end   → 100%
+            self.animation.progress(self.progress);
         }
     });
-
 }
