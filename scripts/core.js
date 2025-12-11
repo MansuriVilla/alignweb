@@ -6,8 +6,63 @@ document.addEventListener("DOMContentLoaded", (event) => {
     initToggleVide();
     initFAQ();
     initTimer();
+    initAuthCarousel();
 
 });
+
+function initAuthCarousel() {
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+    
+    if (slides.length === 0 || dots.length === 0) return;
+
+    let currentIndex = 0;
+    const intervalTime = 5000; // 5 seconds
+    let carouselInterval;
+
+    function showSlide(index) {
+        // Reset all
+        slides.forEach(slide => {
+            slide.style.opacity = '0';
+            slide.style.zIndex = '0';
+        });
+        dots.forEach(dot => {
+            dot.classList.remove('w-7', 'bg-cocoa');
+            dot.classList.add('w-7', 'bg-white');
+        });
+
+        // Activate current
+        slides[index].style.opacity = '1';
+        slides[index].style.zIndex = '10';
+        
+        dots[index].classList.remove('w-7', 'bg-white');
+        dots[index].classList.add('w-7', 'bg-cocoa');
+        
+        currentIndex = index;
+    }
+
+    function nextSlide() {
+        let nextIndex = (currentIndex + 1) % slides.length;
+        showSlide(nextIndex);
+    }
+
+    // Event Listeners for Dots
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            clearInterval(carouselInterval);
+            showSlide(index);
+            startAutoPlay();
+        });
+    });
+
+    function startAutoPlay() {
+        carouselInterval = setInterval(nextSlide, intervalTime);
+    }
+
+    // Initialize
+    showSlide(0);
+    startAutoPlay();
+}
 
 function initTimer() {
     const timerContainer = document.getElementById('countdown-timer');
