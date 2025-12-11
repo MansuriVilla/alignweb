@@ -402,7 +402,7 @@ function initStagerItemAnimation() {
                 duration: 1,
                 ease: "power2.out",
             }),
-            markers: true,
+            markers: false,
             invalidateOnRefresh: true
         });
     });
