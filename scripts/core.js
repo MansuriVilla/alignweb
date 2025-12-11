@@ -5,8 +5,42 @@ document.addEventListener("DOMContentLoaded", (event) => {
     highlightActiveLinks();
     initToggleVide();
     initFAQ();
+    initTimer();
 
 });
+
+function initTimer() {
+    const timerContainer = document.getElementById('countdown-timer');
+    if (!timerContainer) return;
+
+    const daysEl = timerContainer.querySelector('.timer-days');
+    const hoursEl = timerContainer.querySelector('.timer-hours');
+    const minutesEl = timerContainer.querySelector('.timer-minutes');
+    const secondsEl = timerContainer.querySelector('.timer-seconds');
+
+    const duration = 48 * 60 * 60 * 1000; // 48 hours in milliseconds
+
+    function updateTimer() {
+        const now = Date.now();
+        // Calculate remaining time in the current 48-hour cycle based on Unix Epoch
+        // This creates a global loop without needing local storage
+        const remaining = duration - (now % duration);
+
+        const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+
+        daysEl.textContent = String(days).padStart(2, '0');
+        hoursEl.textContent = String(hours).padStart(2, '0');
+        minutesEl.textContent = String(minutes).padStart(2, '0');
+        secondsEl.textContent = String(seconds).padStart(2, '0');
+    }
+
+    // Initial call to avoid delay
+    updateTimer();
+    setInterval(updateTimer, 1000);
+}
 
 
 function initFAQ() {
@@ -80,7 +114,7 @@ function highlightActiveLinks() {
 
     links.forEach(link => {
         // Ignore placeholder links
-        if (link.getAttribute('href') === '#' || link.getAttribute('href') === null || link.getAttribute('href') === '/' || link.getAttribute('href') === '' ) return;
+        if (link.getAttribute('href') === '#' || link.getAttribute('href') === null || link.getAttribute('href') === '/' || link.getAttribute('href') === '/index.html' || link.getAttribute('href') === ''  ) return;
 
         const linkUrl = link.href.split(/[?#]/)[0];
         if (linkUrl === currentUrl) {

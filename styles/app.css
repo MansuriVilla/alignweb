@@ -177,6 +177,8 @@ a {
             border-bottom: 2px solid var(--color-primary);
         }
 
+        .faq-item.active{background: var(--color-beige-100); border-bottom: transparent; border-radius: 15px;}
+
 @keyframes jump7456 {
     15% {
         border-bottom-right-radius: 3px;
