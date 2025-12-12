@@ -27,16 +27,16 @@ function initAuthCarousel() {
             slide.style.zIndex = '0';
         });
         dots.forEach(dot => {
-            dot.classList.remove('w-7', 'bg-cocoa');
-            dot.classList.add('w-7', 'bg-white');
+            dot.classList.remove('w-10', 'bg-cocoa');
+            dot.classList.add('w-10', 'bg-white');
         });
 
         // Activate current
         slides[index].style.opacity = '1';
         slides[index].style.zIndex = '10';
         
-        dots[index].classList.remove('w-7', 'bg-white');
-        dots[index].classList.add('w-7', 'bg-cocoa');
+        dots[index].classList.remove('w-10', 'bg-white');
+        dots[index].classList.add('w-10', 'bg-cocoa');
         
         currentIndex = index;
     }
