@@ -20,7 +20,7 @@
   </head>
 
   <body class="font-sans h-screen flex overflow-hidden p-3 bg-[#FBF3F1]">
-    <div class="flex justify-between w-full  max-w-[1440px] mx-auto">
+    <div class="flex justify-between w-full ">
 
       <div
         class="w-full bg-white overflow-hidden rounded-3xl flex flex-col relative px-20 py-12 overflow-y-auto"
@@ -42,7 +42,7 @@
           >
         </div>
   
-        <div class="w-full max-w-[540px] relative">
+        <div class="w-full relative">
           <!-- Sign In View -->
           <div id="sign-in-view" class="w-full absolute top-0 left-0 transition-all duration-500 ease-in-out">
             <h1 class="text-3xl sm:text-4xl font-header text-cocoa mb-4">
@@ -72,13 +72,13 @@
                   placeholder="999 999 9999"
                   class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors text-cocoa placeholder-gray-400"
                 />
+                <p id="phone-error" class="hidden text-red-500 text-sm mt-1">Please enter a valid 10-digit number</p>
               </div>
     
               <button
                 type="submit"
                 id="send-otp-btn"
-                disabled
-                class="w-full bg-[#D4D8CC] text-white font-medium py-3.5 rounded-full hover:bg-[#c4c8bc] transition-colors uppercase tracking-wide opacity-50 pointer-events-none"
+                class="w-full bg-[#8E9868] text-white font-medium py-3.5 rounded-full hover:bg-[#c4c8bc] transition-colors uppercase tracking-wide"
               >
                 Send OTP
               </button>
@@ -104,7 +104,7 @@
             </p>
     
             <form id="otp-form" class="space-y-8">
-             <div class="flex justify-center gap-2 sm:gap-4">
+             <div class="flex justify-start gap-2 sm:gap-4">
                 <input class="w-20 sm:w-20 h-20 sm:h-20 text-center text-xl border border-black/25 rounded-2xl focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" required />
                 <input class="w-20 sm:w-20 h-20 sm:h-20 text-center text-xl border border-black/25 rounded-2xl focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" required />
                 <input class="w-20 sm:w-20 h-20 sm:h-20 text-center text-xl border border-black/25 rounded-2xl focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" required />
@@ -112,15 +112,15 @@
                 <input class="w-20 sm:w-20 h-20 sm:h-20 text-center text-xl border border-black/25 rounded-2xl focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" required />
                 <input class="w-20 sm:w-20 h-20 sm:h-20 text-center text-xl border border-black/25 rounded-2xl focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" required />
               </div>
+              <p id="otp-error" class="hidden text-red-500 text-sm mt-1 text-center w-full">Please enter the complete 6-digit code</p>
     
               <button
                 type="submit"
                 id="verify-btn"
-                disabled
-                class="w-full bg-[#D4D8CC] text-white font-medium py-3.5 rounded-full hover:bg-[#c4c8bc] transition-colors uppercase tracking-wide opacity-50 pointer-events-none"
+                class="w-full bg-[#8E9868] text-white font-medium py-3.5 rounded-full hover:bg-[#c4c8bc] transition-colors uppercase tracking-wide"
               >
                 Verify
-              </button>
+              </button> 
             </form>
     
             <p class="mt-6 text-sm text-ash text-center sm:text-left">
@@ -141,21 +141,19 @@
             const phoneInput = document.getElementById('phone');
             const displayPhone = document.getElementById('display-phone');
             const otpInputs = otpForm.querySelectorAll('input');
-            const sendOtpBtn = document.getElementById('send-otp-btn');
-            const verifyBtn = document.getElementById('verify-btn');
+            const phoneError = document.getElementById('phone-error');
+            const otpError = document.getElementById('otp-error');
 
             // Phone Input Validation
             phoneInput.addEventListener('input', (e) => {
               // Allow only numbers
               e.target.value = e.target.value.replace(/[^0-9]/g, '');
               
-              // Enable button only if 10 digits
-              if (e.target.value.length === 10) {
-                sendOtpBtn.disabled = false;
-                sendOtpBtn.classList.remove('opacity-50', 'pointer-events-none');
-              } else {
-                sendOtpBtn.disabled = true;
-                sendOtpBtn.classList.add('opacity-50', 'pointer-events-none');
+              // Clear error on input
+              if (phoneError.classList.contains('hidden') === false) {
+                  phoneError.classList.add('hidden');
+                  phoneInput.classList.remove('border-red-500');
+                  phoneInput.classList.add('border-gray-300');
               }
             });
 
@@ -163,6 +161,7 @@
             signInForm.addEventListener('submit', (e) => {
               e.preventDefault();
               const phone = phoneInput.value;
+              
               if (phone.length === 10) {
                 displayPhone.textContent = phone;
                 
@@ -172,20 +171,13 @@
                 
                 // Focus first OTP input
                 setTimeout(() => otpInputs[0].focus(), 500);
+              } else {
+                // Show Error
+                phoneError.classList.remove('hidden');
+                phoneInput.classList.remove('border-gray-300');
+                phoneInput.classList.add('border-red-500');
               }
             });
-
-            // Check OTP Inputs State
-            const checkOtpState = () => {
-              const allFilled = Array.from(otpInputs).every(input => input.value.length === 1);
-              if (allFilled) {
-                verifyBtn.disabled = false;
-                verifyBtn.classList.remove('opacity-50', 'pointer-events-none');
-              } else {
-                verifyBtn.disabled = true;
-                verifyBtn.classList.add('opacity-50', 'pointer-events-none');
-              }
-            };
 
             // Handle OTP Inputs
             otpInputs.forEach((input, index) => {
@@ -193,20 +185,26 @@
                 // Allow only numbers
                 e.target.value = e.target.value.replace(/[^0-9]/g, '');
 
+                // Clear error
+                if (otpError.classList.contains('hidden') === false) {
+                    otpError.classList.add('hidden');
+                    otpInputs.forEach(i => {
+                        i.classList.remove('border-red-500');
+                        i.classList.add('border-black/25');
+                    });
+                }
+
                 if (e.target.value.length === 1) {
                   if (index < otpInputs.length - 1) {
                     otpInputs[index + 1].focus();
                   }
                 }
-                checkOtpState();
               });
 
               input.addEventListener('keydown', (e) => {
                 if (e.key === 'Backspace' && !e.target.value && index > 0) {
                   otpInputs[index - 1].focus();
                 }
-                // Delay check to allow value update
-                setTimeout(checkOtpState, 0);
               });
               
               // Allow pasting complete code
@@ -220,7 +218,15 @@
                   if (otpInputs[i]) otpInputs[i].value = char;
                 });
                 if (otpInputs[Math.min(chars.length, 5)]) otpInputs[Math.min(chars.length, 5)].focus();
-                checkOtpState();
+                
+                // Clear error on paste
+                 if (otpError.classList.contains('hidden') === false) {
+                    otpError.classList.add('hidden');
+                     otpInputs.forEach(i => {
+                        i.classList.remove('border-red-500');
+                        i.classList.add('border-black/25');
+                    });
+                }
               });
             });
 
@@ -232,6 +238,14 @@
               if (otp.length === 6) {
                 // Navigate to dashboard
                 window.location.href = '../dashboard/dashboard.html';
+              } else {
+                 // Show Error
+                 otpError.classList.remove('hidden');
+                 otpInputs.forEach(input => {
+                     // Optionally highlight only empty ones, but highlighting all is safer for "invalid code" feel
+                     input.classList.remove('border-black/25');
+                     input.classList.add('border-red-500');
+                 });
               }
             });
           });
