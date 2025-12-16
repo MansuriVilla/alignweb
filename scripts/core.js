@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     initFAQ();
     initTimer();
     initAuthCarousel();
+    initCalendar();
 
 });
 
@@ -176,4 +177,94 @@ function highlightActiveLinks() {
             link.classList.add('current_page');
         }
     });
+}
+
+function initCalendar() {
+    const calendarContainer = document.getElementById('calender');
+    if (!calendarContainer) return;
+    
+    // Clear existing content
+    calendarContainer.innerHTML = '';
+
+    const today = new Date();
+    const currentDayOfWeek = today.getDay(); // 0 = Sunday
+    
+    // Days of the week
+    const daysOfWeek = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    
+    // Calculate the start of the week (Sunday)
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - currentDayOfWeek);
+    
+    // Generate 7 days for the week
+    for (let i = 0; i < 7; i++) {
+        const date = new Date(startOfWeek);
+        date.setDate(startOfWeek.getDate() + i);
+        
+        const dayOfWeek = daysOfWeek[i];
+        const dayOfMonth = date.getDate();
+        const isToday = i === currentDayOfWeek;
+        const isFirstDay = i === 0;
+        
+        // Create card container
+        const card = document.createElement('div');
+        // Base classes for the card - rounded square, white bg
+        // Using explicit width/height to match the 'square-ish' look from image
+        card.className = `flex flex-col items-center justify-start pt-2 w-[68px] h-[66px] rounded-2xl border  relative transition-all duration-200 ${
+            isToday 
+            ? 'border-[#F197B7] shadow-sm z-10 bg-white' 
+                : 'border-gray-200/60 '
+        }`;
+        
+        
+        // 1. Top Text (Day Letter or "Today")
+        const topText = document.createElement('span');
+        topText.className = 'text-[11px] text-gray-400 font-light mb-0.5';
+        topText.textContent = isToday ? 'Today' : dayOfWeek;
+        
+        // 2. Date Number
+        const dateNumberContainer = document.createElement('div');
+        // Base styling for number
+        dateNumberContainer.className = `flex items-center justify-center w-8 h-8 rounded-full text-[14px] ${
+            isToday ? 'font-bold text-black' : 'font-light text-black'
+        }`;
+
+        // Add dashed border for first day (Sunday) around the number specifically, as per image
+        if (isFirstDay) {
+            dateNumberContainer.classList.add('border', 'border-dashed', 'border-black');
+            dateNumberContainer.style.width = '28px'; // Slightly smaller to fit dashed border nicely? or kept same.
+            dateNumberContainer.style.height = '28px';
+        }
+        
+        dateNumberContainer.textContent = dayOfMonth;
+
+        // Append Top Text and Date
+        card.appendChild(topText);
+        card.appendChild(dateNumberContainer);
+
+        // 3. Pink Dot for Today (floating at bottom)
+        if (isToday) {
+            const dot = document.createElement('div');
+            dot.className = 'absolute -bottom-[6px] w-3 h-3 bg-[#F197B7]/40 rounded-full flex items-center justify-center';
+            // Inner solid dot
+            const innerDot = document.createElement('div');
+            innerDot.className = 'w-1.5 h-1.5 bg-[#F197B7] rounded-full';
+            
+            // To match the image exactly, it looks like a single larger transparent-ish pink circle or a solid one. 
+            // The image has a solid pink circle interrupting the border line. 
+            // Let's go with a solid circle sitting on the line.
+            dot.className = 'absolute -bottom-1.5 w-3 h-3 bg-[#EEBDCF] rounded-full border border-white'; 
+            // Actually image shows a larger soft pink circle.
+            dot.className = 'absolute -bottom-2 w-4 h-4 bg-[#F197B7]/50 backdrop-blur-sm rounded-full flex items-center justify-center';
+            const coreDot = document.createElement('div');
+            coreDot.className = 'w-full h-full bg-[#F197B7] rounded-full opacity-60'; 
+            // Let's stick to a simple aesthetic dot
+            dot.innerHTML = '';
+            dot.className = 'absolute -bottom-2 w-4 h-4 bg-[#F197B7] rounded-full border-[3px] border-white';
+            
+            card.appendChild(dot);
+        }
+
+        calendarContainer.appendChild(card);
+    }
 }
