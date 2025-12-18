@@ -680,6 +680,9 @@
   .h-\[600px\] {
     height: 600px;
   }
+  .h-dvh {
+    height: 100dvh;
+  }
   .h-full {
     height: 100%;
   }
@@ -697,6 +700,9 @@
   }
   .min-h-\[537px\] {
     min-height: 537px;
+  }
+  .min-h-dvh {
+    min-height: 100dvh;
   }
   .w-0 {
     width: calc(var(--spacing) * 0);
@@ -1607,6 +1613,12 @@
   }
   .pb-6 {
     padding-bottom: calc(var(--spacing) * 6);
+  }
+  .pb-10 {
+    padding-bottom: calc(var(--spacing) * 10);
+  }
+  .pb-14 {
+    padding-bottom: calc(var(--spacing) * 14);
   }
   .pb-24 {
     padding-bottom: calc(var(--spacing) * 24);
