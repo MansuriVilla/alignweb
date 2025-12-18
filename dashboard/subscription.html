@@ -10,22 +10,25 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet" />
+
+
+        <link rel="shortcut icon" href="../assets/fav-icon.png" type="image/x-icon">
 </head>
 
 <body class="bg-beige-50 h-screen overflow-hidden text-cocoa font-sans">
     <main id="dashboard" class="flex w-full h-full mx-auto overflow-hidden">
         <aside
             class="w-[280px] h-full bg-white border-r border-[#F2F4F7] flex flex-col p-6 shrink-0 sticky top-0 left-0">
-            <!-- Logo Section -->
+
             <div class="mb-10 px-2 flex items-center gap-3">
                 <img src="../assets/align_full_logo.svg" alt="Align Logo" class="h-8 w-auto" />
             </div>
 
-            <!-- Navigation Menu -->
+
             <nav class="flex-1 flex flex-col gap-1">
                 <a href="./dashboard.html"
-                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#F9F9FB] text-[#23234E] font-medium group transition-all">
-                    <svg class="size-6 text-[#23234E]" viewBox="0 0 24 24" fill="none"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#888888] hover:bg-[#F9F9FB] font-medium group transition-all">
+                    <svg class="size-6" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M3 9.5L12 3L21 9.5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V9.5Z"
@@ -37,11 +40,11 @@
                 </a>
 
                 <a href="./subscription.html"
-                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#888888] bg-[#8E98681F]  hover:text-cocoa font-medium transition-all group">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    class="flex items-center gap-3 px-3 py-2.5 text-[#23234E] rounded-lg bg-[#8E98681F]  hover:text-cocoa font-medium transition-all group">
+                    <svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M6 11V15M18 9V13M17 4C19.4487 4 20.7731 4.37476 21.4321 4.66544C21.5199 4.70415 21.5638 4.72351 21.6904 4.84437C21.7663 4.91682 21.9049 5.12939 21.9405 5.22809C22 5.39274 22 5.48274 22 5.66274V16.4111C22 17.3199 22 17.7743 21.8637 18.0079C21.7251 18.2454 21.5914 18.3559 21.3319 18.4472C21.0769 18.5369 20.562 18.438 19.5322 18.2401C18.8114 18.1017 17.9565 18 17 18C14 18 11 20 7 20C4.55129 20 3.22687 19.6252 2.56788 19.3346C2.48012 19.2958 2.43624 19.2765 2.3096 19.1556C2.23369 19.0832 2.09512 18.8706 2.05947 18.7719C2 18.6073 2 18.5173 2 18.3373L2 7.58885C2 6.68009 2 6.2257 2.13628 5.99214C2.2749 5.75456 2.40859 5.64412 2.66806 5.55281C2.92314 5.46305 3.43803 5.56198 4.46783 5.75985C5.18862 5.89834 6.04348 6 7 6C10 6 13 4 17 4ZM14.5 12C14.5 13.3807 13.3807 14.5 12 14.5C10.6193 14.5 9.5 13.3807 9.5 12C9.5 10.6193 10.6193 9.5 12 9.5C13.3807 9.5 14.5 10.6193 14.5 12Z"
-                            stroke="#888888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            stroke="#23234E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
 
                     Subscription
@@ -70,7 +73,6 @@
                 </a>
             </nav>
 
-            <!-- User Profile Footer -->
             <div class="mt-auto pt-6 border-t border-[#F2F4F7] flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <img src="../assets/avatar-icon.jpg" alt="Avatar" class="size-10 rounded-full bg-beige-200" />
@@ -79,7 +81,7 @@
                         <span class="text-xs text-ash leading-tight">olivia@untitledui.com</span>
                     </div>
                 </div>
-                <a href="../index.html" class="text-ash hover:text-cocoa transition-colors">
+                <a href="../sign-in.html" class="text-ash hover:text-cocoa transition-colors">
                     <svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M15 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H15"
@@ -104,18 +106,18 @@
 
 
             <div class="grid grid-cols-3 gap-6">
-                    <div class="bg-transparent p-2 rounded-3xl flex flex-col gap-3">
-                <div class="bg-white flex flex-col gap-3 rounded-2xl p-6">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-[17px]">Monthly Subscription</h2>
+                <div class="bg-transparent p-2 rounded-3xl flex flex-col gap-3">
+                    <div class="bg-white flex flex-col gap-3 rounded-2xl p-6">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-[17px]">Monthly Subscription</h2>
+                        </div>
+                        <div class="flex items-end gap-1 leading-none">
+                            <span class="text-5xl">$7</span> <span class="text-xl">per month</span>
+                        </div>
+                        <p class="text-[#888888] text-sm">
+                            $7.00 for 1 month then $14.99
+                        </p>
                     </div>
-                    <div class="flex items-end gap-1 leading-none">
-                        <span class="text-5xl">$7</span> <span class="text-xl">per month</span>
-                    </div>
-                    <p class="text-[#888888] text-sm">
-                        $7.00 for 1 month then $14.99
-                    </p>
-                </div>
                 </div>
 
                 <div class="bg-[#F8749A] p-1 rounded-[26px] flex flex-col gap-3">
@@ -132,21 +134,21 @@
                             $99 one-time payment for lifetime access
                         </p>
                     </div>
-                    <p class="text-white text-center">LIFETIME FOUNDATION MEMBER + $500 IN BONUSES</p>
+                    <p class="text-white text-center pb-2.5">LIFETIME FOUNDATION MEMBER + $500 IN BONUSES</p>
                 </div>
 
-                    <div class="bg-transparent p-2 rounded-3xl flex flex-col gap-3">
-                <div class="bg-white  flex flex-col gap-3 rounded-2xl p-6">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-[17px]">Annual Subscription</h2>
+                <div class="bg-transparent p-2 rounded-3xl flex flex-col gap-3">
+                    <div class="bg-white  flex flex-col gap-3 rounded-2xl p-6">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-[17px]">Annual Subscription</h2>
+                        </div>
+                        <div class="flex items-end gap-1 leading-none">
+                            <span class="text-5xl">$29</span> <span class="text-xl">per month</span>
+                        </div>
+                        <p class="text-[#888888] text-sm">
+                            $29.00 for 1 year then $59.99
+                        </p>
                     </div>
-                    <div class="flex items-end gap-1 leading-none">
-                        <span class="text-5xl">$29</span> <span class="text-xl">per month</span>
-                    </div>
-                    <p class="text-[#888888] text-sm">
-                    $29.00 for 1 year then $59.99
-                    </p>
-                </div>
                 </div>
             </div>
         </section>
