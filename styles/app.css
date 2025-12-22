@@ -25,13 +25,14 @@
   --color-olive: #70A766;
 
   --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-nunito: "Nunito", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-header: "Playfair Display", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
   --shadow-custom: 0px 7.26316px 121.053px rgba(0, 0, 0, 0.06);
   --shadow-icon: 0px 7.27px 58.18px 0px #0000000D;
   --shadow-card: 0px 7.26316px 121.053px rgba(0, 0, 0, 0.06);
   --shadow-custom-inset: 0px 0px 3px 0px #00000040 inset;
-
+  --shadow-card-align:0px 1px 2px 0px #EAD6DA;
   --background-image-mint: linear-gradient(167.88deg, #E8F7DA 19.92%, #C2DBAA 96.99%);
   --background-image-sea: linear-gradient(168.85deg, #EBF3F2 13.54%, #D1E8E6 54.71%);
   --background-image-yellow: linear-gradient(168.85deg, #F8F3EC 13.54%, #FFEDD6 54.71%);
@@ -42,6 +43,13 @@
   --background-image-blue-gradient: linear-gradient(121.45deg, #EBF3F2 14.79%, #D1E8E6 90.86%);
   --background-image-yellow-gradient: linear-gradient(121.45deg, #F8F3EC 14.79%, #FFEDD6 90.86%);
 }
+
+
+/* body.dashboard_fonts :is(h1,h2,h3,h4,h5,h6){  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;} */
+
 .bg-glass {
     background: linear-gradient(
         163.54deg,
