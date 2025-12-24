@@ -29,7 +29,7 @@
   --font-header: "Playfair Display", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
   --shadow-custom: 0px 7.26316px 121.053px rgba(0, 0, 0, 0.06);
-  --shadow-icon: 0px 7.27px 58.18px 0px #0000000D;
+  --shadow-icon: 0px 4px 12px 0px #0000001A;
   --shadow-card: 0px 7.26316px 121.053px rgba(0, 0, 0, 0.06);
   --shadow-custom-inset: 0px 0px 3px 0px #00000040 inset;
   --shadow-card-align:0px 1px 2px 0px #EAD6DA;
