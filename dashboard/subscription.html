@@ -1,164 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Subscription | Align</title>
 
     <link rel="stylesheet" href="../styles/app-prod.css" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet" />
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
-    rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
 
+    <link
+      rel="shortcut icon"
+      href="../assets/fav-icon.png"
+      type="image/x-icon"
+    />
+  </head>
 
-        <link rel="shortcut icon" href="../assets/fav-icon.png" type="image/x-icon">
-</head>
-
-<body class="bg-beige-50 h-screen overflow-hidden text-cocoa font-sans">
+  <body class="bg-beige-50 h-screen overflow-hidden text-cocoa font-sans">
     <main id="dashboard" class="flex w-full h-full mx-auto overflow-hidden">
-        <aside
-            class="w-[280px] shadow-card-align h-full bg-white border-r border-[#F2F4F7] flex flex-col p-6 shrink-0 sticky top-0 left-0">
+      <aside
+        class="w-[280px] shadow-card-align h-full bg-white border-r border-[#F2F4F7] flex flex-col p-6 shrink-0 sticky top-0 left-0"
+      >
+        <a href="./dashboard.html" class="mb-10 px-2 flex items-center gap-3">
+          <img
+            src="../assets/align_full_logo.svg"
+            alt="Align Logo"
+            class="h-8 w-auto"
+          />
+        </a>
 
-                      <a href="./dashboard.html" class="mb-10 px-2 flex items-center gap-3">
-                <img src="../assets/align_full_logo.svg" alt="Align Logo" class="h-8 w-auto" />
-            </a>
+        <nav class="flex-1 flex flex-col gap-1">
+          <a
+            href="./dashboard.html"
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#888888] hover:bg-[#F9F9FB] hover:text-cocoa font-nunito font-semibold group transition-all"
+          >
+            <svg
+              class="size-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 9.5L12 3L21 9.5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V9.5Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M9 21V12H15V21"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Dashboard
+          </a>
 
+          <a
+            href="./subscription.html"
+            class="flex items-center gap-3 px-3 py-2.5 text-[#23234E] rounded-lg bg-[#8E98681F] hover:text-cocoa font-nunito font-semibold transition-all group"
+          >
+            <svg
+              class=""
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 11V15M18 9V13M17 4C19.4487 4 20.7731 4.37476 21.4321 4.66544C21.5199 4.70415 21.5638 4.72351 21.6904 4.84437C21.7663 4.91682 21.9049 5.12939 21.9405 5.22809C22 5.39274 22 5.48274 22 5.66274V16.4111C22 17.3199 22 17.7743 21.8637 18.0079C21.7251 18.2454 21.5914 18.3559 21.3319 18.4472C21.0769 18.5369 20.562 18.438 19.5322 18.2401C18.8114 18.1017 17.9565 18 17 18C14 18 11 20 7 20C4.55129 20 3.22687 19.6252 2.56788 19.3346C2.48012 19.2958 2.43624 19.2765 2.3096 19.1556C2.23369 19.0832 2.09512 18.8706 2.05947 18.7719C2 18.6073 2 18.5173 2 18.3373L2 7.58885C2 6.68009 2 6.2257 2.13628 5.99214C2.2749 5.75456 2.40859 5.64412 2.66806 5.55281C2.92314 5.46305 3.43803 5.56198 4.46783 5.75985C5.18862 5.89834 6.04348 6 7 6C10 6 13 4 17 4ZM14.5 12C14.5 13.3807 13.3807 14.5 12 14.5C10.6193 14.5 9.5 13.3807 9.5 12C9.5 10.6193 10.6193 9.5 12 9.5C13.3807 9.5 14.5 10.6193 14.5 12Z"
+                stroke="#23234E"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
 
-            <nav class="flex-1 flex flex-col gap-1">
-                <a href="./dashboard.html"
-                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#888888] hover:bg-[#F9F9FB]  hover:text-cocoa  font-nunito font-semibold group transition-all">
-                    <svg class="size-6" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M3 9.5L12 3L21 9.5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V9.5Z"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M9 21V12H15V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    Dashboard
-                </a>
+            Subscription
+          </a>
 
-                <a href="./subscription.html"
-                    class="flex items-center gap-3 px-3 py-2.5 text-[#23234E] rounded-lg bg-[#8E98681F]  hover:text-cocoa font-nunito font-semibold transition-all group">
-                    <svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M6 11V15M18 9V13M17 4C19.4487 4 20.7731 4.37476 21.4321 4.66544C21.5199 4.70415 21.5638 4.72351 21.6904 4.84437C21.7663 4.91682 21.9049 5.12939 21.9405 5.22809C22 5.39274 22 5.48274 22 5.66274V16.4111C22 17.3199 22 17.7743 21.8637 18.0079C21.7251 18.2454 21.5914 18.3559 21.3319 18.4472C21.0769 18.5369 20.562 18.438 19.5322 18.2401C18.8114 18.1017 17.9565 18 17 18C14 18 11 20 7 20C4.55129 20 3.22687 19.6252 2.56788 19.3346C2.48012 19.2958 2.43624 19.2765 2.3096 19.1556C2.23369 19.0832 2.09512 18.8706 2.05947 18.7719C2 18.6073 2 18.5173 2 18.3373L2 7.58885C2 6.68009 2 6.2257 2.13628 5.99214C2.2749 5.75456 2.40859 5.64412 2.66806 5.55281C2.92314 5.46305 3.43803 5.56198 4.46783 5.75985C5.18862 5.89834 6.04348 6 7 6C10 6 13 4 17 4ZM14.5 12C14.5 13.3807 13.3807 14.5 12 14.5C10.6193 14.5 9.5 13.3807 9.5 12C9.5 10.6193 10.6193 9.5 12 9.5C13.3807 9.5 14.5 10.6193 14.5 12Z"
-                            stroke="#23234E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
+          <a
+            href="./rewards.html"
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#888888] hover:bg-[#F9F9FB] hover:text-cocoa font-nunito font-semibold transition-all group"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12.3008 12.5556H3.78727V19.2222C3.78727 19.9589 4.08625 20.6655 4.61845 21.1864C5.15065 21.7073 5.87246 22 6.62511 22H12.3008M12.3008 12.5556V22M12.3008 12.5556V7.55556M12.3008 12.5556H3.50348C3.0519 12.5556 2.61881 12.38 2.29949 12.0674C1.98017 11.7548 1.80078 11.3309 1.80078 10.8889V9.22222C1.80078 8.7802 1.98017 8.35627 2.29949 8.04371C2.61881 7.73115 3.0519 7.55556 3.50348 7.55556H12.3008M12.3008 12.5556H20.8143V19.2222C20.8143 19.9589 20.5153 20.6655 19.9831 21.1864C19.4509 21.7073 18.7291 22 17.9765 22H12.3008M12.3008 12.5556H21.0981C21.5497 12.5556 21.9828 12.38 22.3021 12.0674C22.6214 11.7548 22.8008 11.3309 22.8008 10.8889V9.22222C22.8008 8.7802 22.6214 8.35627 22.3021 8.04371C21.9828 7.73115 21.5497 7.55556 21.0981 7.55556H12.3008M12.3008 7.55556V4.77778M12.3008 7.55556H9.46294C8.7103 7.55556 7.98849 7.2629 7.45629 6.74196C6.92409 6.22103 6.62511 5.51449 6.62511 4.77778C6.62511 4.04107 6.92409 3.33453 7.45629 2.81359C7.98849 2.29266 8.7103 2 9.46294 2C9.83561 2 10.2046 2.07185 10.5489 2.21145C10.8932 2.35104 11.2061 2.55565 11.4696 2.81359C11.7331 3.07153 11.9421 3.37775 12.0848 3.71477C12.2274 4.05178 12.3008 4.41299 12.3008 4.77778M12.3008 7.55556H15.1386C15.8913 7.55556 16.6131 7.2629 17.1453 6.74196C17.6775 6.22103 17.9765 5.51449 17.9765 4.77778C17.9765 4.04107 17.6775 3.33453 17.1453 2.81359C16.6131 2.29266 15.8913 2 15.1386 2C14.386 2 13.6642 2.29266 13.132 2.81359C12.5998 3.33453 12.3008 4.04107 12.3008 4.77778"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
 
-                    Subscription
-                </a>
+            Rewards
+          </a>
 
-                <a href="./rewards.html"
-                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#888888] hover:bg-[#F9F9FB] hover:text-cocoa font-nunito font-semibold transition-all group">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12.3008 12.5556H3.78727V19.2222C3.78727 19.9589 4.08625 20.6655 4.61845 21.1864C5.15065 21.7073 5.87246 22 6.62511 22H12.3008M12.3008 12.5556V22M12.3008 12.5556V7.55556M12.3008 12.5556H3.50348C3.0519 12.5556 2.61881 12.38 2.29949 12.0674C1.98017 11.7548 1.80078 11.3309 1.80078 10.8889V9.22222C1.80078 8.7802 1.98017 8.35627 2.29949 8.04371C2.61881 7.73115 3.0519 7.55556 3.50348 7.55556H12.3008M12.3008 12.5556H20.8143V19.2222C20.8143 19.9589 20.5153 20.6655 19.9831 21.1864C19.4509 21.7073 18.7291 22 17.9765 22H12.3008M12.3008 12.5556H21.0981C21.5497 12.5556 21.9828 12.38 22.3021 12.0674C22.6214 11.7548 22.8008 11.3309 22.8008 10.8889V9.22222C22.8008 8.7802 22.6214 8.35627 22.3021 8.04371C21.9828 7.73115 21.5497 7.55556 21.0981 7.55556H12.3008M12.3008 7.55556V4.77778M12.3008 7.55556H9.46294C8.7103 7.55556 7.98849 7.2629 7.45629 6.74196C6.92409 6.22103 6.62511 5.51449 6.62511 4.77778C6.62511 4.04107 6.92409 3.33453 7.45629 2.81359C7.98849 2.29266 8.7103 2 9.46294 2C9.83561 2 10.2046 2.07185 10.5489 2.21145C10.8932 2.35104 11.2061 2.55565 11.4696 2.81359C11.7331 3.07153 11.9421 3.37775 12.0848 3.71477C12.2274 4.05178 12.3008 4.41299 12.3008 4.77778M12.3008 7.55556H15.1386C15.8913 7.55556 16.6131 7.2629 17.1453 6.74196C17.6775 6.22103 17.9765 5.51449 17.9765 4.77778C17.9765 4.04107 17.6775 3.33453 17.1453 2.81359C16.6131 2.29266 15.8913 2 15.1386 2C14.386 2 13.6642 2.29266 13.132 2.81359C12.5998 3.33453 12.3008 4.04107 12.3008 4.77778"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
+          <a
+            href="./my-profile.html"
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#888888] hover:bg-[#F9F9FB] hover:text-cocoa font-nunito font-semibold transition-all group"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5.3163 19.4384C5.92462 18.0052 7.34492 17 9 17H15C16.6551 17 18.0754 18.0052 18.6837 19.4384M16 9.5C16 11.7091 14.2091 13.5 12 13.5C9.79086 13.5 8 11.7091 8 9.5C8 7.29086 9.79086 5.5 12 5.5C14.2091 5.5 16 7.29086 16 9.5ZM22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
 
-                    Rewards
-                </a>
+            My Profile
+          </a>
+        </nav>
 
-                <a href="./my-profile.html"
-                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#888888] hover:bg-[#F9F9FB] hover:text-cocoa font-nunito font-semibold transition-all group">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M5.3163 19.4384C5.92462 18.0052 7.34492 17 9 17H15C16.6551 17 18.0754 18.0052 18.6837 19.4384M16 9.5C16 11.7091 14.2091 13.5 12 13.5C9.79086 13.5 8 11.7091 8 9.5C8 7.29086 9.79086 5.5 12 5.5C14.2091 5.5 16 7.29086 16 9.5ZM22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-
-                    My Profile
-                </a>
-            </nav>
-
-            <div class="mt-auto pt-6 border-t border-[#F2F4F7] flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <img src="../assets/avatar-icon.jpg" alt="Avatar" class="size-10 rounded-full bg-beige-200" />
-                    <div class="flex flex-col">
-                        <span class="text-sm font-nunito font-semibold text-cocoa leading-tight">Olivia Rhye</span>
-                        <span class="text-xs text-ash font-nunito leading-tight">olivia@untitledui.com</span>
-                    </div>
-                </div>
-                <a href="../pages/sign-in.html" class="text-ash hover:text-cocoa transition-colors">
-                    <svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M15 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H15"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M10 17L15 12L10 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path d="M15 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </a>
+        <div
+          class="mt-auto pt-6 border-t border-[#F2F4F7] flex items-center justify-between"
+        >
+          <div class="flex items-center gap-3">
+            <img
+              src="../assets/avatar-icon.jpg"
+              alt="Avatar"
+              class="size-10 rounded-full bg-beige-200"
+            />
+            <div class="flex flex-col">
+              <span
+                class="text-sm font-nunito font-semibold text-cocoa leading-tight"
+                >Olivia Rhye</span
+              >
+              <span class="text-xs text-ash font-nunito leading-tight"
+                >olivia@untitledui.com</span
+              >
             </div>
-        </aside>
-        <section class="flex-1 flex flex-col gap-6 p-8 bg-[#FFF9FB] overflow-y-auto">
-            <div class="flex justify-between items-center">
-                <div class="flex flex-col gap-0.5 mb-1">
-                    <h1 class="font-medium text-2xl tracking-[-2%]">
-                        Subscription
-                    </h1>
+          </div>
+          <a
+            href="../pages/sign-in.html"
+            class="text-ash hover:text-cocoa transition-colors"
+          >
+            <svg
+              class="size-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H15"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M10 17L15 12L10 7"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M15 12H3"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        </div>
+      </aside>
+      <section
+        class="flex-1 flex flex-col gap-6 p-8 bg-[#FFF9FB] overflow-y-auto"
+      >
+        <div class="flex justify-between items-center">
+          <div class="flex flex-col gap-0.5 mb-1">
+            <h1 class="font-medium text-2xl tracking-[-2%]">Subscription</h1>
+          </div>
+        </div>
 
-                </div>
+        <div class="grid grid-cols-3 gap-6">
+          <div class="bg-transparent p-2 rounded-3xl flex flex-col gap-3">
+            <div
+              class="bg-white flex flex-col gap-3 rounded-2xl p-6 shadow-card-align"
+            >
+              <div class="flex justify-between items-center">
+                <h2 class="text-[17px] font-nunito font-medium">
+                  Monthly Subscription
+                </h2>
+              </div>
+              <div class="flex items-end gap-1 leading-none">
+                <span class="text-5xl font-nunito font-bold">$7</span>
+                <span class="text-xl font-nunito font-normal">per month</span>
+              </div>
+              <p class="text-[#888888] text-sm font-nunito font-normal">
+                $7.00 for 1 month then $14.99
+              </p>
             </div>
+          </div>
 
-
-            <div class="grid grid-cols-3 gap-6">
-                <div class="bg-transparent p-2 rounded-3xl flex flex-col gap-3 ">
-                    <div class="bg-white flex flex-col gap-3 rounded-2xl p-6 shadow-card-align">
-                        <div class="flex justify-between items-center">
-                            <h2 class="text-[17px] font-nunito font-medium">Monthly Subscription</h2>
-                        </div>
-                        <div class="flex items-end gap-1 leading-none">
-                            <span class="text-5xl font-nunito font-bold">$7</span> <span class="text-xl font-nunito font-normal">per month</span>
-                        </div>
-                        <p class="text-[#888888] text-sm font-nunito font-normal">
-                            $7.00 for 1 month then $14.99
-                        </p>
-                    </div>
-                </div>
-
-                <div class="bg-[#F8749A] p-1 rounded-[26px] flex flex-col gap-3">
-
-                    <div class="bg-white flex flex-col gap-3 rounded-3xl p-6">
-                        <div class="flex justify-between items-center">
-                            <h2 class="text-[17px] font-nunito font-medium">Lifetime Purchase</h2>
-                            <small class="bg-[#23234E] text-white p-3 leading-none rounded-full">Current Plan</small>
-                        </div>
-                        <div class="flex items-end gap-1 leading-none">
-                            <span class="text-5xl font-nunito font-bold">$99</span> <span class="text-xl font-nunito font-normal">/one time payment</span>
-                        </div>
-                        <p class="text-[#888888] text-sm font-nunito font-normal">
-                            $99 one-time payment for lifetime access
-                        </p>
-                    </div>
-                    <p class="text-white text-center pb-2.5 font-nunito font-bold">LIFETIME FOUNDATION MEMBER + $500 IN BONUSES</p>
-                </div>
-
-                <div class="bg-transparent p-2 rounded-3xl flex flex-col gap-3">
-                    <div class="bg-white  flex flex-col gap-3 rounded-2xl p-6 shadow-card-align">
-                        <div class="flex justify-between items-center">
-                            <h2 class="text-[17px] font-nunito font-medium">Annual Subscription</h2>
-                        </div>
-                        <div class="flex items-end gap-1 leading-none">
-                            <span class="text-5xl font-nunito font-bold">$29</span> <span class="text-xl font-nunito font-normal">per month</span>
-                        </div>
-                        <p class="text-[#888888] text-sm font-nunito font-normal">
-                            $29.00 for 1 year then $59.99
-                        </p>
-                    </div>
-                </div>
+          <div class="bg-[#F8749A] p-1 rounded-[26px] flex flex-col gap-3">
+            <div class="bg-white flex flex-col gap-3 rounded-3xl p-6">
+              <div class="flex justify-between items-center">
+                <h2 class="text-[17px] font-nunito font-medium">
+                  Lifetime Purchase
+                </h2>
+                <small
+                  class="bg-[#23234E] text-white p-3 leading-none rounded-full"
+                  >Current Plan</small
+                >
+              </div>
+              <div class="flex items-end gap-1 leading-none">
+                <span class="text-5xl font-nunito font-bold">$99</span>
+                <span class="text-xl font-nunito font-normal"
+                  >/one time payment</span
+                >
+              </div>
+              <p class="text-[#888888] text-sm font-nunito font-normal">
+                $99 one-time payment for lifetime access
+              </p>
             </div>
-        </section>
+            <p class="text-white text-center pb-2.5 font-nunito font-bold">
+              LIFETIME FOUNDATION MEMBER + $500 IN BONUSES
+            </p>
+          </div>
+
+          <div class="bg-transparent p-2 rounded-3xl flex flex-col gap-3">
+            <div
+              class="bg-white flex flex-col gap-3 rounded-2xl p-6 shadow-card-align"
+            >
+              <div class="flex justify-between items-center">
+                <h2 class="text-[17px] font-nunito font-medium">
+                  Annual Subscription
+                </h2>
+              </div>
+              <div class="flex items-end gap-1 leading-none">
+                <span class="text-5xl font-nunito font-bold">$29</span>
+                <span class="text-xl font-nunito font-normal">per month</span>
+              </div>
+              <p class="text-[#888888] text-sm font-nunito font-normal">
+                $29.00 for 1 year then $59.99
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
     <script src="../scripts/core.js"></script>
-</body>
-
+  </body>
 </html>
