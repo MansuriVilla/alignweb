@@ -31,38 +31,28 @@ function initSmartStickyHeader() {
     let isFixed = false;
     let lastY = window.scrollY;
 
-    // Create placeholder only once
-    if (!header.dataset.stickyInit) {
-        const placeholder = document.createElement('div');
-        placeholder.className = 'sticky-header-placeholder';
-        placeholder.style.height = `${headerHeight}px`;
-        header.parentNode.insertBefore(placeholder, header);
-        placeholder.appendChild(header);
-        header.dataset.stickyInit = 'true';
-    }
+    // // Create placeholder only once
+    // if (!header.dataset.stickyInit) {
+    //     const placeholder = document.createElement('div');
+    //     placeholder.className = 'sticky-header-placeholder';
+    //     placeholder.style.height = `${headerHeight}px`;
+    //     header.parentNode.insertBefore(placeholder, header);
+    //     placeholder.appendChild(header);
+    //     header.dataset.stickyInit = 'true';
+    // }
 
-    const placeholder = header.parentElement;
+    // const placeholder = header.parentElement;
 
     // Start completely normal
     gsap.set(header, {
-        position: 'static',
-        top: 'auto',
-        left: 'auto',
-        right: 'auto',
-        width: 'auto',
-        y: 0,
-        clearProps: 'transform'
+        yPercent: 0,
     });
 
     function makeFixed() {
         if (isFixed) return;
         isFixed = true;
         gsap.set(header, {
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            width: '100%',
+            yPercent: -44,
             zIndex: 9999
         });
     }
@@ -71,13 +61,7 @@ function initSmartStickyHeader() {
         if (!isFixed) return;
         isFixed = false;
         gsap.set(header, {
-            position: 'static',
-            top: 'auto',
-            left: 'auto',
-            right: 'auto',
-            width: 'auto',
-            y: 0,
-            clearProps: 'transform'
+            yPercent: 0,
         });
     }
 
@@ -182,6 +166,7 @@ function initSplitText() {
                 const wrapper = document.createElement("div");
                 wrapper.style.overflow = "hidden";
                 wrapper.style.display = "block";
+                wrapper.style.padding = "0.1em";  // Prevent top of letters from being cut off
 
                 line.parentNode.insertBefore(wrapper, line);
                 wrapper.appendChild(line);

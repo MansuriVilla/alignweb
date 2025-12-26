@@ -19,7 +19,7 @@
     />
   </head>
   <body class="bg-beige-50 text-gray-900 font-sans">
-    <header class="bg-beige-50 relative z-50">
+    <header class=" z-50 fixed w-full" data-header="sticky">
       <div class="bg-beige-500 px-6 py-2.5 sm:px-3.5 text-center">
         <p class="text-sm/6 space-x-8 -tracking-tight">
           <a href="javascript:void(0)" class="text-cocoa/70">Join the waitlist</a>
@@ -27,9 +27,9 @@
         </p>
       </div>
 
-      <nav aria-label="Global" class="z-10 w-full" data-header="sticky">
+      <nav aria-label="Global" class="z-10 w-full relative">
         <div
-          class="max-w-[1344px] flex items-center justify-between gap-x-6 p-6 lg:px-8 mx-auto"
+          class="max-w-[1344px] flex items-center justify-between gap-x-6 p-6 lg:px-8 mx-auto "
         >
           <div
             class="absolute top-0 left-0 w-full h-[12vh] pointer-events-none -z-1000 overflow-hidden -scale-y-100"
@@ -139,7 +139,7 @@
       class="max-w-[1344px] mx-auto px-4 lg:px-0 py-6 sm:pt-6 sm:pb-[60px] space-y-[120px]"
     >
       <section
-        class="max-w-[1344px] mx-auto flex flex-col lg:flex-row items-center justify-between px-6 lg:px-8 gap-4 mt-10"
+        class="max-w-[1344px] mx-auto flex flex-col lg:flex-row items-center justify-between px-6 lg:px-8 gap-4 mt-35"
       >
         <!-- LEFT CONTENT -->
         <div
