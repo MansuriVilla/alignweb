@@ -20,7 +20,7 @@
   </head>
   <body class="bg-beige-50 text-gray-900 font-sans">
     <header class=" z-50 fixed w-full" data-header="sticky">
-      <div class="bg-beige-500 px-6 py-2.5 sm:px-3.5 text-center">
+      <div class="bg-beige-500 py-2.5 sm:px-3.5 text-center">
         <p class="text-sm/6 space-x-8 -tracking-tight">
           <a href="javascript:void(0)" class="text-cocoa/70">Join the waitlist</a>
           <span class="text-cocoa font-medium underline">UNLOCK FOUNDERS RATE</span>
@@ -99,7 +99,7 @@
               Why Us
             </a>
           </div>
-          <div class="flex flex-1 items-center justify-end gap-x-6">
+          <div class="hidden lg:flex flex-1 items-center justify-end gap-x-6">
             <a
               href="./pages/sign-in.html"
               class="rounded-full bg-primary px-3 w-full text-center max-w-[199px] py-2.5 text-sm sm:text-base -tracking-tight font-semibold text-white hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary uppercase"
@@ -139,7 +139,7 @@
       class="max-w-[1344px] mx-auto px-4 lg:px-0 py-6 sm:pt-6 sm:pb-[60px] space-y-[120px]"
     >
       <section
-        class="max-w-[1344px] mx-auto flex flex-col lg:flex-row items-center justify-between px-6 lg:px-8 gap-4 mt-35"
+        class="max-w-[1344px] mx-auto flex flex-col lg:flex-row items-center justify-between lg:px-8 gap-4 mt-35"
       >
         <!-- LEFT CONTENT -->
         <div
@@ -267,26 +267,30 @@
           class="text-3xl -tracking-tight text-pretty font-header text-cocoa sm:text-[56px] mb-15"
           data-split="lines"
         >
-          Finally Understand Your Body, Every Phase
+        The app that gets it
         </h2>
 
-        <div
-          class="aspect-video relative w-full max-w-[1000px] mx-auto mb-10"
-          data-rotate
-        >
-          <video
-            src="./assets/media/understand-video.mp4"
-            poster="./assets/poster-image-video.webp"
-            class="w-full h-full mx-auto object-cover rounded-4xl shadow-[0_6px_100px_rgba(0,0,0,0.15)]"
-            playsinline
-            muted
-            loop
-            data-media-play
-          ></video>
 
-          <!-- Play / Pause Overlay Button -->
+
+        <div
+          class="aspect-video relative w-full max-w-[1000px] mx-auto mb-10 video-preview"
+          data-rotate
+           data-play-in-place="true" data-video-url="./assets/media/understand-video.mp4"
+        >
+        <div
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full border-4 border-black border-t-white animate-spin" id="loader-1"></div>
+          <video
+          id="preview-video-1"
+          class=" preview-video w-full h-full mx-auto object-cover rounded-4xl shadow-[0_6px_100px_rgba(0,0,0,0.15)] preview-video"
+          autoplay
+          loop
+          muted
+          playsinline
+         
+        ></video>
+
           <div
-            class="absolute inset-0 h-full flex items-center justify-center z-10 cursor-pointer video-overlay"
+            class="absolute inset-0 h-full flex items-center justify-center z-10 cursor-pointer video-overlay" id="play-button-2"
           >
             <div
               class="play-button transition-opacit y duration-500 ease-in-out"
@@ -350,7 +354,7 @@
         </div>
       </section>
 
-      <section class="max-w-[1080px] mx-auto px-4 sm:px-6 lg:px-8">
+      <section class="max-w-[1144px] mx-auto  lg:px-8">
         <h2
           class="text-3xl sm:text-5xl lg:text-[56px] text-center font-header text-cocoa tracking-tight leading-tight"
           data-split="lines"
@@ -487,9 +491,9 @@
             >
               <div class="p-6 sm:p-8 space-y-4 sm:space-y-6 flex-1">
                 <h3
-                  class="text-2xl sm:text-[22px]/[120%] font-medium text-cocoa"
+                  class="text-2xl sm:text-[28px]/[120%] font-medium text-cocoa"
                 >
-                  Personalized Meals & Activities
+                  Personalized <br> Meals & Activities
                 </h3>
                 <p class="text-ash leading-[150%] text-sm sm:text-base">
             Not only sync your cycle to meals & workouts, but gain detailed recipes with ingredients you can add right to your
@@ -497,7 +501,7 @@
                 </p>
               </div>
               <div
-                class="flex flex-col items-end max-w-[200px] pr-3 sm:max-w-[266px] w-full sm:w-auto"
+                class="flex flex-col items-end max-w-[200px] pt-3 pr-1 sm:max-w-[266px] w-full sm:w-auto"
               >
                 <img
                   src="./assets/meals-activities-image.webp"
@@ -559,9 +563,9 @@
           </div>
         </div>
       </section>
-      <section class="px-6 lg:px-8 " aria-labelledby="features-heading">
+      <section class="lg:px-8 " aria-labelledby="features-heading">
         <div
-          class="relative bg-beige-100  gap-11 items-center rounded-4xl max-w-[1344px] mx-auto p-4 flex"
+          class="relative bg-beige-100  gap-11 items-center rounded-4xl max-w-[1344px] mx-auto p-4 flex flex-col lg:flex-row "
         >
           <div
             data-reveal-init
@@ -658,7 +662,7 @@
         </div>
       </section>
 
-      <section class="text-center px-6 lg:px-8">
+      <section class="text-center lg:px-8">
         <h2
           class="text-3xl -tracking-tight text-pretty font-header mb-[60px] text-cocoa sm:text-[56px]"
           data-split="lines"
@@ -759,7 +763,7 @@
         >
       </section>
       <section>
-        <div class="max-w-[1344px] mx-auto px-6 lg:px-8">
+        <div class="max-w-[1344px] mx-auto lg:px-8">
           <div class="lg:flex lg:gap-[72px]">
             <div class="max-w-[407px] flex-1">
               <h2
@@ -873,7 +877,7 @@
           </div>
         </div>
       </section>
-      <section class="py-12 px-6 lg:px-8" data-rotate>
+      <section class="py-12 lg:px-8" data-rotate>
         <div class="flex items-center justify-center relative min-h-[537px]">
           <img
             src="./assets/cta-image.webp"
@@ -1014,7 +1018,7 @@
           class="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24 flex flex-wrap justify-between"
         >
           <p class="text-sm/[27.2px] text-[#6c6c6c]">
-            &copy; 2025 Align Daily. All rights reserved.
+            &copy; <span data-current-year></span> Align Daily. All rights reserved.
           </p>
           <ul class="flex gap-6">
             <li>

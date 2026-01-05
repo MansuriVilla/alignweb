@@ -1,10 +1,12 @@
 document.addEventListener("DOMContentLoaded", (event) => {
   highlightActiveLinks();
-  initToggleVide();
   initFAQ();
   initTimer();
   initAuthCarousel();
   initCalendar();
+  handleVideoPreview();
+  initMobileMenu();
+  updateCopyrightYear();
 });
 
 function initAuthCarousel() {
@@ -151,30 +153,6 @@ function initFAQ() {
   });
 }
 
-function initToggleVide() {
-  const video = document.querySelector("[data-media-play]");
-  const overlay = document.querySelector(".video-overlay");
-  const playButton = document.querySelector(".play-button");
-
-  if (!video || !overlay || !playButton) return;
-
-  // Function to toggle play/pause
-  overlay.addEventListener("click", () => {
-    if (video.paused || video.ended) {
-      video.play();
-      playButton.style.opacity = "0";
-    } else {
-      video.pause();
-      playButton.style.opacity = "1";
-    }
-  });
-
-  // Optional: make sure button shows again when video naturally ends
-  video.addEventListener("ended", () => {
-    playButton.style.opacity = "1";
-  });
-}
-
 function highlightActiveLinks() {
   const currentUrl = window.location.href.split(/[?#]/)[0];
   const links = document.querySelectorAll("header nav a, footer a");
@@ -291,5 +269,543 @@ function initCalendar() {
     }
 
     calendarContainer.appendChild(card);
+  }
+}
+
+function handleVideoPreview() {
+  const videoPreviews = document.querySelectorAll(".video-preview");
+  const startTime = 0;
+  const endTime = 5;
+
+  // Store all video instances globally to manage playback
+  const videoInstances = [];
+
+  videoPreviews.forEach((preview, index) => {
+    // Select all required elements
+    const previewVideo = preview.querySelector(".preview-video");
+    const playButton = preview.querySelector(".play-button");
+    const loader = document.getElementById(`loader-${index + 1}`);
+
+    // Validate required elements
+    if (!previewVideo || !playButton || !loader) {
+      console.error(
+        `Missing required elements for video block ${index + 1}`,
+        {
+          previewVideo: !!previewVideo,
+          playButton: !!playButton,
+          loader: !!loader,
+        }
+      );
+      return;
+    }
+
+    // Get popup elements
+    const videoPopup = document.getElementById(`dialog-video__${index + 1}`);
+    const popupContent = document.getElementById(
+      `dialog-content__${index + 1}`
+    );
+    const fullVideo = document.getElementById(
+      `dialog-full__video-${index + 1}`
+    );
+    const closeButton = document.getElementById(
+      `dialog-close__btn-${index + 1}`
+    );
+
+    // Determine mode with proper attribute checking
+    const hasPopupElements =
+      videoPopup && popupContent && fullVideo && closeButton;
+    const playInPlaceAttr = preview.dataset.playInPlace;
+
+    // Logic:
+    // - If data-play-in-place="true" -> play in place
+    // - If data-play-in-place="false" -> force popup mode (even without popup elements)
+    // - If no attribute and no popup elements -> play in place (fallback)
+    // - If no attribute and has popup elements -> popup mode (default)
+    let playInPlace;
+    if (playInPlaceAttr === "true") {
+      playInPlace = true;
+    } else if (playInPlaceAttr === "false") {
+      playInPlace = false;
+      // Validate popup elements are available when forced to popup mode
+      if (!hasPopupElements) {
+        console.error(
+          `Video block ${index + 1
+          } has data-play-in-place="false" but missing popup elements`
+        );
+        return;
+      }
+    } else {
+      // No attribute: use popup if elements exist, otherwise play in place
+      playInPlace = !hasPopupElements;
+    }
+
+    // Get video URL and determine if it's an iframe (Vimeo/YouTube)
+    const videoUrl = preview.dataset.videoUrl;
+    const isIframe =
+      videoUrl.includes("vimeo.com") || videoUrl.includes("youtube.com");
+
+    // Set preview and full video sources
+    if (isIframe) {
+      previewVideo.src = videoUrl;
+      if (!playInPlace && fullVideo) {
+        fullVideo.src = videoUrl.replace("autoplay=1", "");
+      }
+    } else {
+      previewVideo.src = videoUrl;
+      if (!playInPlace && fullVideo) {
+        fullVideo.src = videoUrl;
+      }
+    }
+
+    // Function to hide loader
+    const hideLoader = () => {
+      loader.style.display = "none";
+      preview.classList.add("dialog-video__loading");
+    };
+
+    // Track if we're in preview mode or full playback mode
+    let isPreviewMode = true;
+    let vimeoPlayer = null; // Store Vimeo player instance
+    let isPlayingFull = false; // Track if this video is playing full
+
+    // Store video instance info
+    const videoInstance = {
+      index: index + 1,
+      previewVideo,
+      playButton,
+      isIframe,
+      vimeoPlayer: null,
+      playInPlace,
+      stopFullPlayback: () => {
+        if (isPlayingFull) {
+          if (isIframe && videoUrl.includes("vimeo.com") && vimeoPlayer) {
+            vimeoPlayer.pause();
+            vimeoPlayer.setCurrentTime(startTime);
+            vimeoPlayer.setLoop(true);
+          } else {
+            previewVideo.pause();
+            previewVideo.currentTime = startTime;
+            previewVideo.loop = true;
+            previewVideo.muted = true;
+          }
+          playButton.style.opacity = "1";
+          playButton.style.pointerEvents = "auto";
+          isPreviewMode = true;
+          isPlayingFull = false;
+
+          // Resume preview playback
+          if (isIframe && videoUrl.includes("vimeo.com") && vimeoPlayer) {
+            vimeoPlayer.play();
+          } else {
+            previewVideo.play();
+          }
+        }
+      },
+    };
+    videoInstances.push(videoInstance);
+
+    // Handle preview video/iframe playback
+    if (isIframe && videoUrl.includes("vimeo.com")) {
+      vimeoPlayer = new Vimeo.Player(previewVideo);
+      videoInstance.vimeoPlayer = vimeoPlayer;
+
+      vimeoPlayer.on("loaded", () => {
+        hideLoader();
+        vimeoPlayer.setCurrentTime(startTime).then(() => {
+          vimeoPlayer.play().catch((error) => {
+            console.log(
+              `Autoplay prevented for Vimeo video ${index + 1}:`,
+              error
+            );
+            document.addEventListener(
+              "click",
+              () => {
+                vimeoPlayer.play();
+              },
+              { once: true }
+            );
+          });
+        });
+      });
+      vimeoPlayer.on("timeupdate", (data) => {
+        // Only loop preview if in preview mode
+        if (isPreviewMode && data.seconds >= endTime) {
+          vimeoPlayer.setCurrentTime(startTime);
+        }
+      });
+      vimeoPlayer.on("error", () => {
+        console.error(`Error loading Vimeo video ${index + 1}`);
+        hideLoader();
+      });
+    } else {
+      previewVideo.addEventListener("loadedmetadata", () => {
+        hideLoader();
+        previewVideo.currentTime = startTime;
+        previewVideo.play().catch((error) => {
+          console.log(`Autoplay prevented for video ${index + 1}:`, error);
+          document.addEventListener(
+            "click",
+            () => {
+              previewVideo.play();
+            },
+            { once: true }
+          );
+        });
+      });
+      previewVideo.addEventListener("timeupdate", () => {
+        // Only loop preview if in preview mode
+        if (isPreviewMode && previewVideo.currentTime >= endTime) {
+          previewVideo.currentTime = startTime;
+        }
+      });
+      previewVideo.addEventListener("error", () => {
+        console.error(`Error loading video ${index + 1}`);
+        hideLoader();
+      });
+    }
+
+    // Add click handler to video for play-in-place mode to stop playback
+    if (playInPlace) {
+      const handleVideoClick = (e) => {
+        // Only handle click if video is playing in full mode and not clicking the play button
+        if (isPlayingFull && !playButton.contains(e.target)) {
+          e.stopPropagation();
+          // Stop full playback and return to preview
+          if (isIframe && videoUrl.includes("vimeo.com") && vimeoPlayer) {
+            vimeoPlayer.pause();
+            vimeoPlayer.setCurrentTime(startTime);
+            vimeoPlayer.setLoop(true);
+            vimeoPlayer.play();
+          } else {
+            previewVideo.pause();
+            previewVideo.currentTime = startTime;
+            previewVideo.loop = true;
+            previewVideo.muted = true;
+            previewVideo.play();
+          }
+          playButton.style.opacity = "1";
+          playButton.style.pointerEvents = "auto";
+          isPreviewMode = true;
+          isPlayingFull = false;
+        }
+      };
+
+      preview.addEventListener("click", handleVideoClick);
+    }
+
+    // Handle play button click
+    playButton.addEventListener("click", (e) => {
+      e.stopPropagation(); // Prevent video click handler from firing
+
+      if (playInPlace) {
+        // Stop all other videos that are playing in full
+        videoInstances.forEach((instance) => {
+          if (instance.index !== index + 1 && instance.playInPlace) {
+            instance.stopFullPlayback();
+          }
+        });
+
+        // Switch to full playback mode
+        isPreviewMode = false;
+        isPlayingFull = true;
+
+        // Hide play button immediately
+        playButton.style.opacity = "0";
+        playButton.style.pointerEvents = "none";
+
+        // Play in place: play full video in the same container
+        if (isIframe && videoUrl.includes("vimeo.com") && vimeoPlayer) {
+          vimeoPlayer
+            .setCurrentTime(0)
+            .then(() => {
+              vimeoPlayer.setLoop(false);
+              vimeoPlayer.play();
+            })
+            .catch((error) => {
+              console.error(
+                `Error playing full Vimeo video ${index + 1}:`,
+                error
+              );
+              // Show play button again if there's an error
+              playButton.style.opacity = "1";
+              playButton.style.pointerEvents = "auto";
+              isPreviewMode = true;
+              isPlayingFull = false;
+            });
+
+          // Show play button again when video ends
+          vimeoPlayer.on("ended", () => {
+            playButton.style.opacity = "1";
+            playButton.style.pointerEvents = "auto";
+            isPreviewMode = true;
+            isPlayingFull = false;
+            vimeoPlayer.setCurrentTime(startTime);
+            vimeoPlayer.setLoop(true);
+            vimeoPlayer.play();
+          });
+        } else {
+          // For HTML5 video
+          previewVideo.currentTime = 0;
+          previewVideo.loop = false;
+          previewVideo.muted = false; // Unmute for full playback
+
+          // Play the video
+          const playPromise = previewVideo.play();
+
+          if (playPromise !== undefined) {
+            playPromise.catch((error) => {
+              console.error(`Error playing full video ${index + 1}:`, error);
+              // Show play button again if there's an error
+              playButton.style.opacity = "1";
+              playButton.style.pointerEvents = "auto";
+              isPreviewMode = true;
+              isPlayingFull = false;
+              previewVideo.muted = true;
+            });
+          }
+
+          // Show play button again when video ends
+          const handleVideoEnd = () => {
+            playButton.style.opacity = "1";
+            playButton.style.pointerEvents = "auto";
+            isPreviewMode = true;
+            isPlayingFull = false;
+            previewVideo.currentTime = startTime;
+            previewVideo.loop = true;
+            previewVideo.muted = true; // Mute again for preview
+            previewVideo.play();
+            previewVideo.removeEventListener("ended", handleVideoEnd);
+          };
+          previewVideo.addEventListener("ended", handleVideoEnd);
+        }
+      } else {
+        // Stop all other videos that are playing in full (play-in-place ones)
+        videoInstances.forEach((instance) => {
+          if (instance.playInPlace) {
+            instance.stopFullPlayback();
+          }
+        });
+
+        // Original popup behavior
+        if (isIframe && videoUrl.includes("vimeo.com")) {
+          const fullPlayer = new Vimeo.Player(fullVideo);
+          if (previewVideo.tagName === "IFRAME") {
+            if (vimeoPlayer) {
+              vimeoPlayer.pause();
+            }
+          } else {
+            previewVideo.pause();
+          }
+          document.body.classList.add("dialog-box__open");
+          gsap.to(videoPopup, {
+            opacity: 1,
+            duration: 0.2,
+            ease: "power2.out",
+            onStart: () => {
+              videoPopup.style.display = "flex";
+              videoPopup.style.pointerEvents = "auto";
+            },
+          });
+          gsap.to(popupContent, {
+            opacity: 1,
+            duration: 0.5,
+            ease: "power2.out",
+            delay: 0.2,
+            onComplete: () => {
+              fullPlayer.play();
+            },
+          });
+        } else {
+          previewVideo.pause();
+          document.body.classList.add("dialog-box__open");
+          gsap.to(videoPopup, {
+            opacity: 1,
+            duration: 0.2,
+            ease: "power2.out",
+            onStart: () => {
+              videoPopup.style.display = "flex";
+              videoPopup.style.pointerEvents = "auto";
+            },
+          });
+          gsap.to(popupContent, {
+            opacity: 1,
+            duration: 0.5,
+            ease: "power2.out",
+            delay: 0.2,
+            onComplete: () => {
+              fullVideo.play();
+            },
+          });
+        }
+      }
+    });
+
+    // Close popup functionality (only for popup mode)
+    if (!playInPlace && closeButton) {
+      closeButton.addEventListener("click", () => {
+        gsap.to(popupContent, {
+          opacity: 0,
+          duration: 0.5,
+          ease: "power2.in",
+          onStart: () => {
+            if (isIframe && videoUrl.includes("vimeo.com")) {
+              const fullPlayer = new Vimeo.Player(fullVideo);
+              fullPlayer.pause();
+              if (fullVideo.dataset.videoBehavior === "restart") {
+                fullPlayer.setCurrentTime(0);
+              }
+              if (previewVideo.tagName === "IFRAME") {
+                if (vimeoPlayer) {
+                  vimeoPlayer.play();
+                }
+              } else {
+                previewVideo.play();
+              }
+            } else {
+              fullVideo.pause();
+              if (fullVideo.dataset.videoBehavior === "restart") {
+                fullVideo.currentTime = 0;
+              }
+              previewVideo.play();
+            }
+          },
+        });
+        gsap.to(videoPopup, {
+          opacity: 0,
+          duration: 0.2,
+          ease: "power2.in",
+          delay: 0.5,
+          onComplete: () => {
+            videoPopup.style.display = "none";
+            videoPopup.style.pointerEvents = "none";
+            document.body.classList.remove("dialog-box__open");
+          },
+        });
+      });
+
+      // Close popup on ESC key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && videoPopup.style.display !== "none") {
+          closeButton.click();
+        }
+      });
+    }
+  });
+}
+
+function initMobileMenu() {
+  const hamburgerBtn = document.querySelector('[commandfor="mobile-menu"]');
+  if (!hamburgerBtn) return;
+
+  // Create mobile menu if it doesn't exist
+  let mobileMenu = document.getElementById("mobile-menu");
+  if (!mobileMenu) {
+    mobileMenu = document.createElement("div");
+    mobileMenu.id = "mobile-menu";
+    mobileMenu.innerHTML = `
+      <div class="menu-content" data-lenis-prevent>
+        <div class="menu-header">
+          <a href="/index.html" class="menu-logo-container">
+            <!-- Logo will be injected here -->
+          </a>
+          <button class="close-btn" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="menu-links"></div>
+      </div>
+    `;
+    document.body.appendChild(mobileMenu);
+  }
+
+  const menuLinksContainer = mobileMenu.querySelector(".menu-links");
+  const logoContainer = mobileMenu.querySelector(".menu-logo-container");
+  const closeBtn = mobileMenu.querySelector(".close-btn");
+
+  // Sync links and logo from desktop nav
+  function syncMenu() {
+    // Sync Logo
+    const desktopLogo = document.querySelector('header .lg\\:flex-1 img');
+    if (desktopLogo && logoContainer.children.length === 0) {
+      const mobileLogo = desktopLogo.cloneNode(true);
+      mobileLogo.classList.remove("max-w-[110px]", "h-[40px]");
+      mobileLogo.style.maxWidth = "110px";
+      mobileLogo.style.height = "auto";
+      logoContainer.appendChild(mobileLogo);
+      
+      // Update link to home
+      const desktopLogoLink = document.querySelector('header .lg\\:flex-1 a');
+      if (desktopLogoLink) {
+        logoContainer.href = desktopLogoLink.href;
+      }
+    }
+
+    // Sync Links
+    const desktopLinks = document.querySelectorAll('header nav div.lg\\:gap-x-12 a');
+    menuLinksContainer.innerHTML = "";
+    desktopLinks.forEach((link) => {
+      const mobileLink = link.cloneNode(true);
+      mobileLink.classList.add("menu-link");
+      // Ensure we keep the exact href
+      menuLinksContainer.appendChild(mobileLink);
+    });
+
+    // Also add the "Try Align Today" button
+    const ctaBtn = document.querySelector('header nav div.flex-1.items-center.justify-end a');
+    if (ctaBtn) {
+      const mobileCta = ctaBtn.cloneNode(true);
+      mobileCta.className = " rounded-full bg-primary px-6 py-4 text-center text-white font-semibold uppercase mt-8 text-lg";
+      menuLinksContainer.appendChild(mobileCta);
+    }
+  }
+
+  function toggleMenu() {
+    mobileMenu.classList.toggle("active");
+    document.body.style.overflow = mobileMenu.classList.contains("active") ? "hidden" : "";
+    
+    if (mobileMenu.classList.contains("active")) {
+      // Small delay to ensure animations feel smooth
+      gsap.from("#mobile-menu .menu-link", {
+        y: 20,
+        opacity: 0,
+        duration: 0.4,
+        stagger: 0.1,
+        ease: "power2.out"
+      });
+      
+      if (mobileMenu.querySelector(".bg-primary")) {
+        gsap.from(mobileMenu.querySelector(".bg-primary"), {
+          y: 20,
+          opacity: 0,
+          duration: 0.4,
+          delay: 0.3,
+          ease: "power2.out"
+        });
+      }
+    }
+  }
+
+  hamburgerBtn.addEventListener("click", () => {
+    syncMenu();
+    toggleMenu();
+  });
+
+  closeBtn.addEventListener("click", toggleMenu);
+
+  // Close menu on link click
+  menuLinksContainer.addEventListener("click", (e) => {
+    if (e.target.closest("a")) {
+      toggleMenu();
+    }
+  });
+}
+
+function updateCopyrightYear() {
+  const currentYear = new Date().getFullYear();
+  const copyrightYear = document.querySelector('[data-current-year]');
+  if (copyrightYear) {
+    copyrightYear.textContent = currentYear;
   }
 }

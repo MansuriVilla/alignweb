@@ -30,6 +30,80 @@ button, a { cursor: pointer; }
 .iti input { width: 100% !important; box-sizing: border-box; }
 .loading { opacity: 0.6; cursor: not-allowed; }
 
+/* Mobile Menu */
+#mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  background: rgba(252, 250, 247, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+#mobile-menu.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#mobile-menu .menu-content {
+  padding: 1.4rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#mobile-menu .menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+#mobile-menu .menu-links {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* last second child */
+
+.menu-links > a:last-child {
+  margin-top: auto;
+}
+
+#mobile-menu .menu-link {
+  font-family: var(--font-header);
+  font-size: 2.5rem;
+  line-height: 1.5;
+  width: fit-content;
+  color: var(--color-cocoa);
+  text-decoration: none;
+  transition: transform 0.3s ease;
+  font-weight: 500;
+}
+
+#mobile-menu .menu-link:active {
+  transform: scale(0.95);
+}
+
+#mobile-menu .close-btn {
+  padding: 0.5rem;
+  color: var(--color-cocoa);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+#mobile-menu .close-btn svg {
+  width: 2rem;
+  height: 2rem;
+}
+
 @keyframes jump7456 {
  15% { border-bottom-right-radius: 3px; }
  25% { transform: translateY(9px) rotate(22.5deg); }
