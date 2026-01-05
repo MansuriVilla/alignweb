@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   handleVideoPreview();
   initMobileMenu();
   updateCopyrightYear();
+  initCountryPicker();
 });
 
 function initAuthCarousel() {
@@ -808,4 +809,99 @@ function updateCopyrightYear() {
   if (copyrightYear) {
     copyrightYear.textContent = currentYear;
   }
+}
+
+const countries = [
+  { name: "United States", code: "+1", iso: "us" },
+  { name: "United Kingdom", code: "+44", iso: "gb" },
+  { name: "Canada", code: "+1", iso: "ca" },
+  { name: "Australia", code: "+61", iso: "au" },
+  { name: "Germany", code: "+49", iso: "de" },
+  { name: "France", code: "+33", iso: "fr" },
+  { name: "India", code: "+91", iso: "in" },
+  { name: "United Arab Emirates", code: "+971", iso: "ae" },
+  { name: "Saudi Arabia", code: "+966", iso: "sa" },
+  { name: "Singapore", code: "+65", iso: "sg" },
+  { name: "Japan", code: "+81", iso: "jp" },
+  { name: "China", code: "+86", iso: "cn" },
+  { name: "Brazil", code: "+55", iso: "br" },
+  { name: "Mexico", code: "+52", iso: "mx" },
+  { name: "Italy", code: "+39", iso: "it" },
+  { name: "Spain", code: "+34", iso: "es" },
+  { name: "Netherlands", code: "+31", iso: "nl" },
+  { name: "Switzerland", code: "+41", iso: "ch" },
+  { name: "Sweden", code: "+46", iso: "se" },
+  { name: "Norway", code: "+47", iso: "no" },
+];
+
+function initCountryPicker() {
+  const pickers = document.querySelectorAll('[data-country-picker]');
+  if (pickers.length === 0) return;
+
+  pickers.forEach(picker => {
+    const btn = picker.querySelector('.country-select-btn');
+    const dropdown = picker.querySelector('.country-dropdown');
+    const searchInput = picker.querySelector('.country-search-input');
+    const list = picker.querySelector('.country-list');
+    const flagImg = btn.querySelector('img');
+    const codeSpan = btn.querySelector('.selected-code');
+    const hiddenInput = picker.querySelector('input[type="hidden"]');
+
+    // Initial render
+    renderCountries(countries);
+
+    function renderCountries(data) {
+      list.innerHTML = data.map(c => `
+        <div class="country-item" data-code="${c.code}" data-iso="${c.iso}" data-name="${c.name}">
+          <img src="https://flagcdn.com/w40/${c.iso}.png" alt="${c.name}">
+          <span class="country-name">${c.name}</span>
+          <span class="country-code">${c.code}</span>
+        </div>
+      `).join('');
+    }
+
+    // Toggle dropdown
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdown.classList.toggle('active');
+      if (dropdown.classList.contains('active')) {
+        searchInput.focus();
+      }
+    });
+
+    // Search
+    searchInput.addEventListener('input', (e) => {
+      e.stopPropagation();
+      const term = e.target.value.toLowerCase();
+      const filtered = countries.filter(c => 
+        c.name.toLowerCase().includes(term) || c.code.includes(term)
+      );
+      renderCountries(filtered);
+    });
+
+    // Selection
+    list.addEventListener('click', (e) => {
+      const item = e.target.closest('.country-item');
+      if (!item) return;
+
+      const code = item.dataset.code;
+      const iso = item.dataset.iso;
+      const name = item.dataset.name;
+
+      flagImg.src = `https://flagcdn.com/w40/${iso}.png`;
+      flagImg.alt = name;
+      codeSpan.textContent = code;
+      
+      if (hiddenInput) hiddenInput.value = code;
+
+      dropdown.classList.remove('active');
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!picker.contains(e.target)) {
+        dropdown.classList.remove('active');
+      }
+    });
+  });
 }

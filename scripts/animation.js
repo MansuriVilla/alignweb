@@ -30,17 +30,17 @@ function initSmartStickyHeader() {
   let isFixed = false;
   let lastY = window.scrollY;
 
-  // // Create placeholder only once
-  // if (!header.dataset.stickyInit) {
-  //     const placeholder = document.createElement('div');
-  //     placeholder.className = 'sticky-header-placeholder';
-  //     placeholder.style.height = `${headerHeight}px`;
-  //     header.parentNode.insertBefore(placeholder, header);
-  //     placeholder.appendChild(header);
-  //     header.dataset.stickyInit = 'true';
-  // }
+  // Create placeholder only once
+  if (!header.dataset.stickyInit) {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'sticky-header-placeholder';
+      placeholder.style.height = `${headerHeight}px`;
+      header.parentNode.insertBefore(placeholder, header);
+      placeholder.appendChild(header);
+      header.dataset.stickyInit = 'true';
+  }
 
-  // const placeholder = header.parentElement;
+  const placeholder = header.parentElement;
 
   // Start completely normal
   gsap.set(header, {
