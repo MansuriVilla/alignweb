@@ -78,7 +78,7 @@ button, a { cursor: pointer; }
 
 #mobile-menu .menu-link {
   font-family: var(--font-header);
-  font-size: 2.5rem;
+  font-size: 30px;
   line-height: 1.5;
   width: fit-content;
   color: var(--color-cocoa);

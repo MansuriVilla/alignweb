@@ -757,7 +757,7 @@ function initMobileMenu() {
     const ctaBtn = document.querySelector('header nav div.flex-1.items-center.justify-end a');
     if (ctaBtn) {
       const mobileCta = ctaBtn.cloneNode(true);
-      mobileCta.className = " rounded-full bg-primary px-6 py-4 text-center text-white font-semibold uppercase mt-8 text-lg";
+      mobileCta.className = " rounded-full bg-primary px-6 py-2 text-sm text-center text-white font-semibold mt-8 text-lg";
       menuLinksContainer.appendChild(mobileCta);
     }
   }
