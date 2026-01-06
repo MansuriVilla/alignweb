@@ -8,14 +8,30 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
   gsap.ticker.lagSmoothing(0);
 
+
   initSmartStickyHeader();
-  initSplitText();
+  if (document.fonts) {
+    document.fonts.ready.then(() => {
+      initSplitText();
+    });
+  }
   imageRevealInit();
   initRotateAnimation();
   initStaggerAnimation();
   initDirectionalScrub();
   initStagerItemAnimation();
   initProgressLineAnimation();
+
+
+  // Handle window resize to fix text breaking
+  let resizeTimeout;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      initSplitText(true);
+      ScrollTrigger.refresh();
+    }, 250);
+  });
 });
 
 function initSmartStickyHeader() {
@@ -32,12 +48,12 @@ function initSmartStickyHeader() {
 
   // Create placeholder only once
   if (!header.dataset.stickyInit) {
-      const placeholder = document.createElement('div');
-      placeholder.className = 'sticky-header-placeholder';
-      placeholder.style.height = `${headerHeight}px`;
-      header.parentNode.insertBefore(placeholder, header);
-      placeholder.appendChild(header);
-      header.dataset.stickyInit = 'true';
+    const placeholder = document.createElement('div');
+    placeholder.className = 'sticky-header-placeholder';
+    placeholder.style.height = `${headerHeight}px`;
+    header.parentNode.insertBefore(placeholder, header);
+    placeholder.appendChild(header);
+    header.dataset.stickyInit = 'true';
   }
 
   const placeholder = header.parentElement;
@@ -128,7 +144,14 @@ function initSmartStickyHeader() {
   update();
 }
 
-function initSplitText() {
+let splitInstances = [];
+
+function initSplitText(isResize = false) {
+  if (isResize) {
+    splitInstances.forEach(split => split.revert());
+    splitInstances = [];
+  }
+
   const splitElements = document.querySelectorAll("[data-split]:not(.about *)");
 
   splitElements.forEach((element) => {
@@ -159,6 +182,8 @@ function initSplitText() {
     }
 
     const split = new SplitText(element, { type: splitType });
+    splitInstances.push(split);
+
     const target =
       split[splitType] || split.chars || split.words || split.lines;
 
@@ -167,7 +192,7 @@ function initSplitText() {
         const wrapper = document.createElement("div");
         wrapper.style.overflow = "hidden";
         wrapper.style.display = "block";
-        wrapper.style.padding = "0.1em"; // Prevent top of letters from being cut off
+        wrapper.style.padding = "0.05em 0"; // Prevent top/bottom of letters from being cut off
 
         line.parentNode.insertBefore(wrapper, line);
         wrapper.appendChild(line);
@@ -189,7 +214,9 @@ function initSplitText() {
 
     ScrollTrigger.create({
       trigger: element,
-      start: "top 90%",
+      start: "top 95%",
+      end: "top 75%",
+      scrub: 1,
       animation: anim,
     });
   });

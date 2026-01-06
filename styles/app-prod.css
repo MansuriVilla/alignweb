@@ -2751,6 +2751,11 @@
       margin-bottom: calc(var(--spacing) * 8);
     }
   }
+  .lg\:mb-15 {
+    @media (width >= 64rem) {
+      margin-bottom: calc(var(--spacing) * 15);
+    }
+  }
   .lg\:-ml-0\.5 {
     @media (width >= 64rem) {
       margin-left: calc(var(--spacing) * -0.5);
