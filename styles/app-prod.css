@@ -2690,11 +2690,6 @@
       display: none;
     }
   }
-  .lg\:h-10 {
-    @media (width >= 64rem) {
-      height: calc(var(--spacing) * 10);
-    }
-  }
   .lg\:min-h-\[398px\] {
     @media (width >= 64rem) {
       min-height: 398px;
@@ -2703,6 +2698,11 @@
   .lg\:w-1\/2 {
     @media (width >= 64rem) {
       width: calc(1/2 * 100%);
+    }
+  }
+  .lg\:w-auto {
+    @media (width >= 64rem) {
+      width: auto;
     }
   }
   .lg\:max-w-\[361px\] {
