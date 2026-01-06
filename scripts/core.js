@@ -164,7 +164,7 @@ function highlightActiveLinks() {
       link.getAttribute("href") === "#" ||
       link.getAttribute("href") === null ||
       link.getAttribute("href") === "/" ||
-      link.getAttribute("href") === "/index.html" ||
+      link.getAttribute("href") === "/" ||
       link.getAttribute("href") === ""
     )
       return;
@@ -706,7 +706,7 @@ function initMobileMenu() {
     mobileMenu.innerHTML = `
       <div class="menu-content" data-lenis-prevent>
         <div class="menu-header">
-          <a href="/index.html" class="menu-logo-container">
+          <a href="/" class="menu-logo-container">
             <!-- Logo will be injected here -->
           </a>
           <button class="close-btn" aria-label="Close menu">
