@@ -262,3 +262,26 @@ button, a { cursor: pointer; }
 .country-dropdown::-webkit-scrollbar-thumb:hover {
   background: #d1d5db;
 }
+
+.country-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  text-align: center;
+  gap: 12px;
+}
+
+.country-not-found svg {
+  width: 40px;
+  height: 40px;
+  color: #9ca3af;
+  margin: 0 auto;
+}
+
+.country-not-found p {
+  color: #6b7280;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
