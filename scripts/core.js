@@ -7,9 +7,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
   handleVideoPreview();
   initMobileMenu();
   updateCopyrightYear();
-  initCountryPicker();
+  if(isMobile){
+    initCountryPicker();
+  }
   initPopup();
 });
+
 
 function initAuthCarousel() {
   const slides = document.querySelectorAll(".carousel-slide");
@@ -698,6 +701,10 @@ function handleVideoPreview() {
   });
 }
 
+
+
+
+
 function initMobileMenu() {
   const hamburgerBtn = document.querySelector('[commandfor="mobile-menu"]');
   if (!hamburgerBtn) return;
@@ -710,9 +717,19 @@ function initMobileMenu() {
     mobileMenu.innerHTML = `
       <div class="menu-content" data-lenis-prevent>
         <div class="menu-header">
-          <a href="./index.html" class="menu-logo-container">
+          <a href="../index.html" class="-m-1.5 p-1.5 flex items-center gap-2 ">
+              <span class="sr-only">Align</span>
+              <span class="flex">
+                <img
+                  class="flex max-w-[110px] h-10"
+                  src="../assets/align-gif-logo.gif"
+                  alt="Align Full Header Logo"
+                  
+                />
+              </span>
+              <span class="text-2xl font-normal font-header">align</span>
+            </a>
 
-          </a>
           <button class="close-btn" aria-label="Close menu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
@@ -731,22 +748,6 @@ function initMobileMenu() {
 
   // Sync links and logo from desktop nav
   function syncMenu() {
-    // Sync Logo
-    const desktopLogo = document.querySelector('header .lg\\:flex-1 img');
-    if (desktopLogo && logoContainer.children.length === 0) {
-      const mobileLogo = desktopLogo.cloneNode(true);
-      mobileLogo.classList.remove("max-w-[110px]", "h-[40px]");
-      mobileLogo.style.maxWidth = "110px";
-      mobileLogo.style.height = "auto";
-      logoContainer.appendChild(mobileLogo);
-      
-      // Update link to home
-      const desktopLogoLink = document.querySelector('header .lg\\:flex-1 a');
-      if (desktopLogoLink) {
-        logoContainer.href = desktopLogoLink.href;
-      }
-    }
-
     // Sync Links
     const desktopLinks = document.querySelectorAll('header nav div.lg\\:gap-x-12 a');
     menuLinksContainer.innerHTML = "";
