@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   initMobileMenu();
   updateCopyrightYear();
   initCountryPicker();
+  initPopup();
 });
 
 function initAuthCarousel() {
@@ -710,7 +711,7 @@ function initMobileMenu() {
       <div class="menu-content" data-lenis-prevent>
         <div class="menu-header">
           <a href="./index.html" class="menu-logo-container">
-            <!-- Logo will be injected here -->
+
           </a>
           <button class="close-btn" aria-label="Close menu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -850,7 +851,10 @@ function initCountryPicker() {
     const codeSpan = btn.querySelector('.selected-code');
     const hiddenInput = picker.querySelector('input[type="hidden"]');
 
-    // Initial render
+    // Set default direction class (important for initial layout)
+    dropdown.classList.add('down');
+
+    // Initial render of all countries
     renderCountries(countries);
 
     function renderCountries(data) {
@@ -866,6 +870,7 @@ function initCountryPicker() {
         `;
         return;
       }
+
       list.innerHTML = data.map(c => `
         <div class="country-item" data-code="${c.code}" data-iso="${c.iso}" data-name="${c.name}">
           <img src="https://flagcdn.com/w40/${c.iso}.webp" alt="${c.name}">
@@ -875,26 +880,87 @@ function initCountryPicker() {
       `).join('');
     }
 
+    // Smart positioning using off-screen clone to avoid scroll interference
+    function adjustDropdownDirection() {
+      // Remove all direction classes
+      dropdown.classList.remove('down', 'up', 'side-right', 'side-left', 'active');
+
+      // Create invisible clone to measure real size without affecting page/scroll
+      const clone = dropdown.cloneNode(true);
+      Object.assign(clone.style, {
+        position: 'absolute',
+        top: '-9999px',
+        left: '-9999px',
+        visibility: 'hidden',
+        pointerEvents: 'none',
+        opacity: '0',
+        display: 'block' // Ensure it's rendered
+      });
+      clone.classList.add('down', 'active'); // Use default direction for measurement
+      document.body.appendChild(clone);
+
+      const dropdownHeight = clone.offsetHeight;
+      const dropdownWidth = clone.offsetWidth;
+
+      document.body.removeChild(clone);
+
+      // Get current viewport position of button
+      const btnRect = btn.getBoundingClientRect();
+
+      const spaceBelow = window.innerHeight - btnRect.bottom;
+      const spaceAbove = btnRect.top;
+      const spaceRight = window.innerWidth - btnRect.right;
+      const spaceLeft = btnRect.left;
+
+      const buffer = 20; // Small buffer to avoid edge touching
+
+      // Decide best direction: down → up → right → left
+      if (spaceBelow >= dropdownHeight + buffer) {
+        dropdown.classList.add('down');
+      } else if (spaceAbove >= dropdownHeight + buffer) {
+        dropdown.classList.add('up');
+      } else if (spaceRight >= dropdownWidth + buffer) {
+        dropdown.classList.add('side-right');
+      } else if (spaceLeft >= dropdownWidth + buffer) {
+        dropdown.classList.add('side-left');
+      } else {
+        dropdown.classList.add('down'); // Final fallback
+      }
+
+      // Show dropdown with correct direction
+      dropdown.classList.add('active');
+      if (searchInput) searchInput.focus();
+    }
+
     // Toggle dropdown
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      dropdown.classList.toggle('active');
+
+      // Close other open dropdowns
+      document.querySelectorAll('.country-dropdown.active').forEach(d => {
+        if (d !== dropdown) d.classList.remove('active');
+      });
+
       if (dropdown.classList.contains('active')) {
-        searchInput.focus();
+        dropdown.classList.remove('active');
+      } else {
+        adjustDropdownDirection();
       }
     });
 
-    // Search
-    searchInput.addEventListener('input', (e) => {
-      e.stopPropagation();
-      const term = e.target.value.toLowerCase();
-      const filtered = countries.filter(c => 
-        c.name.toLowerCase().includes(term) || c.code.includes(term)
-      );
-      renderCountries(filtered);
-    });
+    // Search functionality
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        e.stopPropagation();
+        const term = e.target.value.toLowerCase();
+        const filtered = countries.filter(c =>
+          c.name.toLowerCase().includes(term) || c.code.includes(term)
+        );
+        renderCountries(filtered);
+      });
+    }
 
-    // Selection
+    // Country selection
     list.addEventListener('click', (e) => {
       const item = e.target.closest('.country-item');
       if (!item) return;
@@ -906,17 +972,168 @@ function initCountryPicker() {
       flagImg.src = `https://flagcdn.com/w40/${iso}.png`;
       flagImg.alt = name;
       codeSpan.textContent = code;
-      
+
       if (hiddenInput) hiddenInput.value = code;
 
       dropdown.classList.remove('active');
+      if (searchInput) searchInput.value = '';
+      renderCountries(countries); // Reset list
     });
 
-    // Close on outside click
-    document.addEventListener('click', (e) => {
-      if (!picker.contains(e.target)) {
-        dropdown.classList.remove('active');
+    // Close when clicking outside
+    document.addEventListener('click', () => {
+      dropdown.classList.remove('active');
+    });
+
+    // Prevent closing when clicking inside dropdown
+    dropdown.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  });
+}
+
+function initPopup() {
+  // Open Popup
+  function openPopup(popupId) {
+    const popup = document.getElementById(popupId);
+    if (!popup) return;
+    popup.classList.remove('pointer-events-none');
+    const content = popup.querySelector('[data-popup-content]');
+    if (!content) return;
+
+    const tl = gsap.timeline();
+    tl.to(popup, {
+      opacity: 1,
+      duration: 0.4,
+      ease: "power2.out"
+    });
+    tl.fromTo(content,
+      { opacity: 0, scale: 0.95, y: 20 },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "back.out(1.4)"
+      },
+      "-=0.2"
+    );
+  }
+
+  // Close Popup
+  function closePopup(popupId) {
+    const popup = document.getElementById(popupId);
+    if (!popup) return;
+    const content = popup.querySelector('[data-popup-content]');
+    if (!content) return;
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        popup.classList.add('pointer-events-none');
+        content.style.opacity = '0';
+        content.style.transform = ''; // reset scale/y
       }
     });
+
+    tl.to(content, {
+      opacity: 0,
+      scale: 0.95,
+      y: 20,
+      duration: 0.3,
+      ease: "power2.in"
+    });
+    tl.to(popup, {
+      opacity: 0,
+      duration: 0.3
+    }, "-=0.2");
+  }
+
+  // === REUSABLE TRIGGER BUTTONS ===
+  document.querySelectorAll('[data-popup]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const baseName = btn.getAttribute('data-popup');
+      const popupId = baseName + '-popup';
+      openPopup(popupId);
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  // === CLOSE BUTTONS INSIDE ANY POPUP ===
+  document.querySelectorAll('[data-close]').forEach(closeBtn => {
+    closeBtn.addEventListener('click', () => {
+      const popup = closeBtn.closest('[id$="-popup"]');
+      if (popup) {
+        closePopup(popup.id);
+        document.body.style.overflow = '';
+      }
+    });
+  });
+
+  // === CLICK OUTSIDE TO CLOSE ===
+  document.querySelectorAll('[id$="-popup"]').forEach(popup => {
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup) {
+        closePopup(popup.id);
+        document.body.style.overflow = '';
+      }
+    });
+  });
+
+  // === ESCAPE KEY ===
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('[id$="-popup"]').forEach(popup => {
+        if (!popup.classList.contains('pointer-events-none')) {
+          closePopup(popup.id);
+          document.body.style.overflow = '';
+        }
+      });
+    }
+  });
+
+  // === FORM VALIDATION: REQUIRED FIELDS + TERMS CHECKBOX ===
+  document.querySelectorAll('form').forEach(form => {
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const termsCheckbox = form.querySelector('input[type="checkbox"][name="terms"]');
+
+    if (!submitBtn || !termsCheckbox) return;
+
+    // Function to check if all required fields are filled
+    const areRequiredFieldsFilled = () => {
+      const requiredFields = form.querySelectorAll('input[required], textarea[required], select[required]');
+      return Array.from(requiredFields).every(field => {
+        if (field.type === 'checkbox') return field.checked;
+        return field.value.trim() !== '';
+      });
+    };
+
+    // Function to update submit button state
+    const updateSubmitButton = () => {
+      const fieldsFilled = areRequiredFieldsFilled();
+      const termsChecked = termsCheckbox.checked;
+
+      if (fieldsFilled && termsChecked) {
+        submitBtn.classList.remove('opacity-40', 'pointer-events-none', 'cursor-not-allowed');
+        submitBtn.classList.add('hover:bg-primary-dark', 'cursor-pointer');
+        submitBtn.style.opacity = '1';
+        submitBtn.disabled = false;
+      } else {
+        submitBtn.classList.add('opacity-40', 'pointer-events-none', 'cursor-not-allowed');
+        submitBtn.classList.remove('hover:bg-primary-dark', 'cursor-pointer');
+        submitBtn.style.opacity = '0.4';
+        submitBtn.disabled = true;
+      }
+    };
+
+    // Initial state
+    updateSubmitButton();
+
+    // Listen to input changes on all fields inside the form
+    form.addEventListener('input', updateSubmitButton);
+    form.addEventListener('change', updateSubmitButton); // for checkboxes, selects, etc.
+
+    // Specifically listen to terms checkbox
+    termsCheckbox.addEventListener('change', updateSubmitButton);
   });
 }

@@ -122,21 +122,22 @@ button, a { cursor: pointer; }
   display: flex;
   align-items: center;
   gap: 8px;
-  position: relative;
+  position: relative; /* Critical for absolute dropdown positioning */
 }
 
 .country-select-btn {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 6px;
   padding: 0 12px;
   background: #fdfdfd;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  height: 52px;
+  height: auto;
   cursor: pointer;
   transition: all 0.2s ease;
-  min-width: 80px;
+  min-width: 105px;
+  align-self: normal;
 }
 
 .country-select-btn:hover {
@@ -145,23 +146,22 @@ button, a { cursor: pointer; }
 }
 
 .country-select-btn img {
-  width: 24px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   object-fit: cover;
-  border-radius: 2px;
+  border-radius: 50%;
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .country-select-btn .selected-code {
-  font-size: 0.95rem;
+  font-size: 12px;
   font-weight: 500;
   color: var(--color-cocoa);
 }
 
+/* Dropdown Base Styles */
 .country-dropdown {
   position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
   width: 280px;
   max-height: 350px;
   overflow-y: auto;
@@ -171,14 +171,44 @@ button, a { cursor: pointer; }
   box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   opacity: 0;
-  transform: translateY(-10px);
   pointer-events: none;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Direction: Down (default) */
+.country-dropdown.down {
+  top: calc(100% + 8px);
+  left: 0;
+  transform: translateY(-10px);
+}
+
+/* Direction: Up */
+.country-dropdown.up {
+  top: auto;
+  bottom: calc(100% + 8px);
+  left: 0;
+  transform: translateY(10px);
+}
+
+/* Direction: Right side */
+.country-dropdown.side-right {
+  top: 0;
+  left: calc(100% + 8px);
+  transform: translateX(-10px);
+}
+
+/* Direction: Left side */
+.country-dropdown.side-left {
+  top: 0;
+  left: auto;
+  right: calc(100% + 8px);
+  transform: translateX(10px);
+}
+
+/* Active state - visible and animated in */
 .country-dropdown.active {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) translateX(0);
   pointer-events: auto;
 }
 
@@ -224,10 +254,10 @@ button, a { cursor: pointer; }
 }
 
 .country-item img {
-  width: 22px;
-  height: 14px;
+  width: 20px;
+  height: 20px;
   object-fit: cover;
-  border-radius: 1px;
+  border-radius: 50%;
 }
 
 .country-item .country-name {
@@ -245,7 +275,7 @@ button, a { cursor: pointer; }
   color: #9ca3af;
 }
 
-/* Scrollbar for dropdown */
+/* Custom scrollbar */
 .country-dropdown::-webkit-scrollbar {
   width: 6px;
 }
@@ -263,6 +293,7 @@ button, a { cursor: pointer; }
   background: #d1d5db;
 }
 
+/* No results state */
 .country-not-found {
   display: flex;
   flex-direction: column;
@@ -277,7 +308,6 @@ button, a { cursor: pointer; }
   width: 40px;
   height: 40px;
   color: #9ca3af;
-  margin: 0 auto;
 }
 
 .country-not-found p {

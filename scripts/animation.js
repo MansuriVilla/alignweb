@@ -34,6 +34,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
 });
 
+ const isMobile = window.innerWidth <= 1024;
+
 function initSmartStickyHeader() {
   const smartHeader = document.querySelector("[data-header='smart-sticky']");
   const simpleHeader = document.querySelector("[data-header='sticky']");
@@ -68,7 +70,7 @@ function initSmartStickyHeader() {
     isFixed = true;
     gsap.set(header, {
       yPercent: -35,
-      zIndex: 9999,
+      zIndex: 99,
     });
   }
 
@@ -423,30 +425,31 @@ function initStagerItemAnimation() {
 function initProgressLineAnimation() {
   const progressLine = document.querySelector("[data-scroll-line]");
 
+  if (!progressLine) return;
+  
+
+  // Set initial state
   gsap.set(progressLine, {
-    height: "180px",
+    height: "180px",                 
     top: 0,
-    transformOrigin: "top center",
+    transformOrigin: "top center"
+  });
+
+  const tl = gsap.to(progressLine, {
+    height: isMobile ? "99.1%" : "98.70%",
+    ease: "none",
+    paused: true
   });
 
   ScrollTrigger.create({
-    trigger: ".space-y-\\[100px\\]",
+    trigger: "section.overflow-hidden", 
     start: "top 40%",
     end: "bottom 40%",
     scrub: true,
     markers: false,
-
-    // This is the magic: animate from current height (180px) to 100%
-    animation: gsap.to(progressLine, {
-      height: "100%",
-      ease: "none",
-      paused: true,
-    }),
-
+    animation: tl,
     onUpdate: (self) => {
-      // self.progress = 0   → playhead at start → stays 180px
-      // self.progress = 1   → playhead at end   → 100%
-      self.animation.progress(self.progress);
-    },
+      tl.progress(self.progress);
+    }
   });
 }

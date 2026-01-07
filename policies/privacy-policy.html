@@ -27,12 +27,8 @@
     <header class="z-50 fixed w-full" data-header="sticky">
       <div class="bg-beige-500 py-2.5 sm:px-3.5 text-center">
         <p class="text-sm/6 space-x-8 -tracking-tight">
-          <a href="javascript:void(0)" class="text-cocoa/70"
-            >Join the waitlist</a
-          >
-          <span class="text-cocoa font-medium underline"
-            >UNLOCK FOUNDERS RATE</span
-          >
+          <span href="javascript:void(0)" class="text-cocoa/70" >Join the waitlist</span>
+          <a href="javascript:void(0)" data-popup="membership" class="text-cocoa font-medium underline">UNLOCK FOUNDERS RATE</a>
         </p>
       </div>
 
@@ -73,7 +69,7 @@
             <a href="../index.html" class="-m-1.5 p-1.5 flex items-center gap-2 ">
               <span class="sr-only">Align</span>
               <span class="flex">
-                <img class="flex max-w-[110px] h-[40px]" src="../assets/align-gif-logo.gif" alt="Align Full Header Logo" />
+                <img class="flex max-w-[110px] h-10" src="../assets/align-gif-logo.gif" alt="Align Full Header Logo" />
               </span>
               <span class="text-2xl font-normal font-header logo-text">align</span>
             </a>
@@ -141,7 +137,7 @@
     <main
       class="max-w-[1344px] mx-auto px-4 lg:px-8 pt-32 pb-24 space-y-[120px]"
     >
-      <section class="bg-beige-100 rounded-xl lg:rounded-4xl w-full max-w-[1280px] mx-auto">
+      <section class="bg-beige-100 rounded-xl lg:rounded-4xl w-full max-w-7xl mx-auto">
         <div class="py-10 lg:py-20 px-5 lg:px-8 text-center">
             <p class="rounded-full bg-beige-500 px-5 py-2 text-sm text-cocoa inline-flex gap-2">
                 Terms
@@ -390,11 +386,11 @@
             <p
               class="text-lg sm:text-2xl mt-3 font-light max-w-[638px] mx-auto"
             >
-              Over 420 million people³ around the world use the Flo app to track
-              their periods, ovulation, and pregnancy.
+              Join the growing community & transform your wellness routine.
             </p>
             <a
               href="javascript:void(0)"
+              data-popup="membership"
               class="px-8 py-3 rounded-full bg-primary font-semibold text-white mt-11 uppercase inline-block tracking-[-2%]"
               >JOIN WAITLIST</a
             >
@@ -405,30 +401,48 @@
 
     <footer class="bg-beige-100">
       <div class="mx-auto max-w-[1344px] px-6 pt-16 pb-6 sm:pt-24 lg:px-8">
-        <div class="flex flex-wrap justify-between">
+        <div class="flex flex-wrap justify-between flex-col lg:flex-row">
           <div class="space-y-8 flex flex-col">
-            <div class="flex flex-col gap-5">
-                <a href="../index.html" class="-m-1.5 p-1.5 flex items-center gap-2 ">
-              <span class="sr-only">Align</span>
-              <span class="flex">
-                <img class="flex max-w-[110px] h-[40px]" src="../assets/align-gif-logo.gif" alt="Align Full Header Logo" />
-              </span>
-              <span class="text-2xl font-normal font-header">align</span>
-            </a>
-              <p class="text-ash">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                <br />eiusmod tempor incididunt ut labore et dolore.
-              </p>
+          <div class="flex flex-col">
+              <a href="../index.html" class="-m-1.5 p-1.5 flex items-center gap-2 ">
+                <span class="sr-only">Align</span>
+                <span class="flex">
+                  <img class="flex max-w-[110px] h-10" src="../assets/align-gif-logo.gif" alt="Align Full Header Logo" />
+                </span>
+                <span class="text-2xl font-normal font-header">align</span>
+              </a>
+              <div class="gap-x-6 mt-12  hidden lg:flex">
+                <a href="https://www.instagram.com/aligndaily.app/" target="_blank" class="text-primary">
+                <span class="sr-only">Instagram</span>
+                <img src="../assets/insta-icon.svg" alt="Instagram Icon" />
+              </a>
+              </div>
             </div>
             <div class="flex gap-x-6 mt-auto">
-              <a
-                href="https://www.tiktok.com/@alignmenow"
-                target="_blank"
-                class="text-primary"
-              >
+                 <a href="https://www.instagram.com/aligndaily.app/" target="_blank" class="text-primary block lg:hidden">
+                <span class="sr-only">Instagram</span>
+                <img src="../assets/insta-icon.svg" alt="Instagram Icon" />
+              </a>
+             <!-- <a href="https://www.tiktok.com/@alignmenow" target="_blank" class="text-primary">
                 <span class="sr-only">Tiktok</span>
                 <img src="../assets/tiktok-ico.svg" alt="Tiktok Icon" />
               </a>
+               <a href="#" class="text-primary">
+            <span class="sr-only">X</span>
+            <img src="../assets/twitterx-icon.svg" alt="Twitter Icon" />
+          </a>
+          <a href="#" class="text-primary">
+            <span class="sr-only">Facebook</span>
+            <img src="../assets/fb-icon.svg" alt="Facebook Icon" />
+          </a>
+          <a href="#" class="text-primary">
+            <span class="sr-only">Instagram</span>
+            <img src="../assets/insta-icon.svg" alt="Instagram Icon" />
+          </a>
+          <a href="#" class="text-primary">
+            <span class="sr-only">Instagram</span>
+            <img src="../assets/linkedin-icon.svg" alt="Linkedin Icon" />
+          </a> -->
             </div>
           </div>
           <div class="mt-16 xl:col-span-2 xl:mt-0">
@@ -441,28 +455,28 @@
                  
                   <li>
                     <a
-                      href="../pages/pricing.html"
+                      href="./pricing.html"
                       class="text-base/[27.2px] text-[#6c6c6c]"
                       >Pricing</a
                     >
                   </li>
                   <li>
                     <a
-                      href="../pages/features.html"
+                      href="./features.html"
                       class="text-base/[27.2px] text-[#6c6c6c]"
                       >Features</a
                     >
                   </li>
                   <li>
                     <a
-                      href="../pages/phases.html"
+                      href="./phases.html"
                       class="text-base/[27.2px] text-[#6c6c6c]"
                       >Phases</a
                     >
                   </li>
                   <li>
                     <a
-                      href="../pages/why-us.html"
+                      href="./why-us.html"
                       class="text-base/[27.2px] text-[#6c6c6c]"
                       >Why Us</a
                     >
@@ -477,16 +491,15 @@
                   <li class="flex flex-col gap-0.5">
                     <span class="text-cocoa font-medium">Email</span>
                     <a
-                      href="mailto:hello@aligndaily.com"
+                      href="mailto:connect@aligndaily.com"
                       class="text-base/[27.2px] text-[#6c6c6c]"
-                      >hello@aligndaily.com</a
+                      >connect@aligndaily.com</a
                     >
                   </li>
+
                   <li class="flex flex-col gap-0.5">
                     <span class="text-cocoa font-medium">Office Hours</span>
-                    <a
-                      href="javascript:void(0)"
-                      class="text-base/[27.2px] text-[#6c6c6c] cursor-default!"
+                    <a href="#" class="text-base/[27.2px] text-[#6c6c6c]"
                       >Mon-Sat, 9 AM - 7 PM</a
                     >
                   </li>
@@ -499,21 +512,16 @@
           class="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24 flex flex-wrap justify-between"
         >
           <p class="text-sm/[27.2px] text-[#6c6c6c]">
-            &copy; <span data-current-year></span> Align Daily. All rights
-            reserved.
+            &copy; <span data-current-year></span> Align Daily. All rights reserved.
           </p>
           <ul class="flex gap-6">
             <li>
-              <a
-                href="privacy-policy.html"
-                class="text-sm/[27.2px] text-[#6c6c6c]"
+              <a href="../policies/privacy-policy.html" class="text-sm/[27.2px] text-[#6c6c6c]"
                 >Privacy Policy</a
               >
             </li>
             <li>
-              <a
-                href="terms-and-condition.html"
-                class="text-sm/[27.2px] text-[#6c6c6c]"
+              <a href="../policies/terms-and-condition.html" class="text-sm/[27.2px] text-[#6c6c6c]"
                 >Terms & Conditions</a
               >
             </li>
@@ -521,6 +529,99 @@
         </div>
       </div>
     </footer>
+
+  <div id="membership-popup" class="h-full w-full bg-black/50 backdrop-blur-lg flex items-center justify-center fixed inset-0 z-999 transition-opacity duration-300 opacity-0 pointer-events-none" data-lenis-prevent>
+    <div class="flex flex-col gap-4 w-full max-w-[clamp(1080px,66vw,1200px)] px-5 lg:px-0" data-popup-content>
+      <div class="bg-white rounded-full leading-none w-7 lg:w-12 h-7 lg:h-12 hover:cursor-pointer flex items-center justify-center ml-auto text-black" data-close>
+        <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 1L1 13M1 1L13 13" stroke="#0D0503" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</span>
+      </div>
+      <div class="bg-white rounded-3xl flex w-full overflow-hidden">
+        <div class="w-full max-w-96 hidden lg:flex">
+          <img src="../assets/membership.webp" alt="Membership" class="flex h-full object-cover">
+        </div>
+        <div class="w-full px-6 lg:px-16 py-8 lg:py-20 flex flex-col gap-4 lg:gap-8">
+          <div class="flex flex-col gap-3 lg:gap-5">
+
+            <h2 class="text-2xl lg:text-4xl tracking-[-2px] font-header text-cocoa">
+              Join Our Exclusive Beta Launch!
+            </h2>
+            <p class="text-sm lg:text-lg text-ash leading-none">Be the first to try Align Daily & transform your life!</p>
+          </div>
+
+
+          <form action="#" class="flex flex-col gap-2 lg:gap-4" method="POST">
+            <div class="flex gap-4 flex-col lg:flex-row">
+              <div class="flex flex-col gap-1 lg:gap-3 w-full *:w-full">
+                <label for="firstName" class="capitalize text-xs lg:text-sm">First name*</label>
+                <input type="text" id="firstName" placeholder="Enter your first name" class="border border-gray-300 rounded-2xl px-3 lg:px-5 py-2 lg:py-4 focus:outline-none focus:ring-2 focus:ring-primary" required>
+              </div>
+              <div class="flex flex-col gap-1 lg:gap-3 w-full *:w-full">
+                <label for="lastName" class="capitalize text-xs lg:text-sm">Last name</label>
+                <input type="text" id="lastName" placeholder="Enter your last name" class="border border-gray-300 rounded-2xl px-3 lg:px-5 py-2 lg:py-4 focus:outline-none focus:ring-2 focus:ring-primary">
+              </div>
+            </div>
+            <div class="flex gap-4 flex-col lg:flex-row">
+              <div class="flex flex-col gap-1 lg:gap-3 w-full *:w-full">
+                <label for="userEmail" class="capitalize text-xs lg:text-sm">Email*</label>
+                <input type="email" id="userEmail" placeholder="Enter your email" class="h-full border border-gray-300 rounded-2xl px-3 lg:px-5 py-2 lg:py-4 focus:outline-none focus:ring-2 focus:ring-primary" required>
+              </div>
+              <div class="flex flex-col gap-1 lg:gap-3 w-full *:w-full">
+                   <label
+                    for="phone" class="capitalize text-xs lg:text-sm"
+                    class="block text-sm text-cocoa mb-2"
+                    >Phone Number*</label
+                  >
+                  <div class="country-picker-container" data-country-picker>
+                    <button type="button" class="country-select-btn rounded-2xl">
+                      <img src="https://flagcdn.com/w40/us.png" alt="United States" decoding="async">
+                      <span class="selected-code">+1</span>
+                      <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    
+                    <div class="country-dropdown">
+                      <div class="country-search-wrap">
+                        <input type="text" class="country-search-input" placeholder="Search country...">
+                      </div>
+                      <div class="country-list">
+                        <!-- Countries injected via JS -->
+                      </div>
+                    </div>
+
+                    <input type="hidden" name="country_code" value="+1">
+                    
+                    <input
+                      type="text"
+                      id="phone"
+                      name="phone"
+                      required
+                      maxlength="10"
+                      inputmode="numeric"
+                      placeholder="Enter your number"
+                      class="flex-1 px-3 lg:px-5  py-2 lg:py-4 rounded-2xl border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors text-cocoa placeholder-gray-400 w-full"
+                    />
+                  </div>
+                  <p id="phone-error" class="hidden text-red-500 text-sm mt-1">
+                    Please enter a valid 10-digit number
+                  </p>
+              </div>
+            </div>
+            <div class="flex w-full mt-4 flex-col">
+              <button type="submit" id="submit-btn" class="bg-primary text-white px-3 lg:px-6 py-1 lg:py-3 rounded-full hover:bg-primary-dark transition-colors w-full opacity-40 pointer-events-none cursor-not-allowed">Submit</button>
+              <label for="terms" class="flex items-start gap-2 mt-4">
+                <input type="checkbox" id="terms-checkbox" name="terms"  class="rounded accent-primary ">
+                <span class="text-xs lg:text-sm font-light text-cocoa">I agree to receive email & SMS messages from Align Daily. Message & data rates may apply. Txt STOP to opt out <a class="underline text-primary">View terms of use</a></span>
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <script src="../scripts/lib/lenis.min.js" defer></script>
     <script src="../scripts/lib/gsap.min.js" defer></script>
