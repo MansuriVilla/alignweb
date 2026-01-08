@@ -462,6 +462,10 @@ function initHeaderDarkSectionHandler() {
   const darkSections = document.querySelectorAll("[data-header-dark]");
   if (darkSections.length === 0) return;
 
+  // darkSections last index
+
+  const lastDarkSection = darkSections[darkSections.length - 1];
+
   const headerTextElements = header.querySelectorAll(
     "[data-nav-link]"
   );
@@ -502,6 +506,10 @@ function initHeaderDarkSectionHandler() {
         link.classList.remove("text-white", "hover:text-gray-200");
         link.classList.add("text-gray-500", "hover:text-gray-700");
       });
+    }
+    if (lastDarkSection){
+      const navLogo = header.querySelector("[data-nav-logo]");
+      navLogo.classList.toggle("invert" , headerCenter >= lastDarkSection.getBoundingClientRect().top);
     }
   }
 
