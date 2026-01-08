@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 
   initSmartStickyHeader();
+  initHeaderDarkSectionHandler();
   if (document.fonts) {
     document.fonts.ready.then(() => {
       initSplitText();
@@ -34,7 +35,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
 });
 
- const isMobile = window.innerWidth <= 1024;
+const isMobile = window.innerWidth <= 1024;
 
 function initSmartStickyHeader() {
   const smartHeader = document.querySelector("[data-header='smart-sticky']");
@@ -453,3 +454,61 @@ function initProgressLineAnimation() {
     }
   });
 }
+
+function initHeaderDarkSectionHandler() {
+  const header = document.querySelector("[data-header]");
+  if (!header) return;
+
+  const darkSections = document.querySelectorAll("[data-header-dark]");
+  if (darkSections.length === 0) return;
+
+  const headerTextElements = header.querySelectorAll(
+    "[data-nav-link]"
+  );
+  const navLinks = header.querySelectorAll("[data-nav-link]");
+
+  function checkHeaderPosition() {
+    const headerRect = header.getBoundingClientRect();
+    const headerCenter = headerRect.top + headerRect.height / 2;
+
+    let isOverDarkSection = false;
+
+    darkSections.forEach((section) => {
+      const sectionRect = section.getBoundingClientRect();
+
+      if (
+        headerCenter >= sectionRect.top &&
+        headerCenter <= sectionRect.bottom
+      ) {
+        isOverDarkSection = true;
+      }
+    });
+
+    if (isOverDarkSection) {
+      header.classList.add("header-light-mode");
+      headerTextElements.forEach((el) => {
+        el.classList.add("text-white");
+      });
+      navLinks.forEach((link) => {
+        link.classList.remove("text-gray-500", "hover:text-gray-700");
+        link.classList.add("text-white", "hover:text-gray-200");
+      });
+    } else {
+      header.classList.remove("header-light-mode");
+      headerTextElements.forEach((el) => {
+        el.classList.remove("text-white");
+      });
+      navLinks.forEach((link) => {
+        link.classList.remove("text-white", "hover:text-gray-200");
+        link.classList.add("text-gray-500", "hover:text-gray-700");
+      });
+    }
+  }
+
+  window.addEventListener("scroll", checkHeaderPosition, { passive: true });
+
+  window.addEventListener("resize", checkHeaderPosition, { passive: true });
+
+  checkHeaderPosition();
+}
+
