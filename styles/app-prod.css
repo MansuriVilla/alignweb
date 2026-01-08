@@ -809,6 +809,9 @@
   .max-w-\[clamp\(1080px\,66vw\,1200px\)\] {
     max-width: clamp(1080px, 66vw, 1200px);
   }
+  .max-w-\[clamp\(1180px\,66vw\,1200px\)\] {
+    max-width: clamp(1180px, 66vw, 1200px);
+  }
   .max-w-full {
     max-width: 100%;
   }
