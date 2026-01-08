@@ -1,3 +1,4 @@
+const isMobileCore = window.innerWidth <= 1024;
 document.addEventListener("DOMContentLoaded", (event) => {
   highlightActiveLinks();
   initFAQ();
@@ -7,7 +8,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   handleVideoPreview();
   initMobileMenu();
   updateCopyrightYear();
-  if(isMobile){
+  if(isMobileCore){
     initCountryPicker();
   }
   initPopup();

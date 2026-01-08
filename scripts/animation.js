@@ -1,3 +1,4 @@
+const isMobile = window.innerWidth <= 1024;
 document.addEventListener("DOMContentLoaded", (event) => {
   gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
 });
 
-const isMobile = window.innerWidth <= 1024;
+
 
 function initSmartStickyHeader() {
   const smartHeader = document.querySelector("[data-header='smart-sticky']");
