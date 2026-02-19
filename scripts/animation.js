@@ -71,7 +71,7 @@ function initSmartStickyHeader() {
     if (isFixed) return;
     isFixed = true;
     gsap.set(header, {
-      yPercent: -35,
+      yPercent: -55,
       zIndex: 99,
     });
   }

@@ -15,6 +15,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
 });
 
 
+
+  $(function(){
+	FlipClock.Lang.Custom = { days:'Days', hours:'Hours', minutes:'Minutes', seconds:'Seconds' };
+	var opts = {
+		clockFace: 'DailyCounter',
+		countdown: true,
+		language: 'Custom'
+	};  
+	var countdown = 1773039540 - ((new Date().getTime())/1000); // from: 03/08/2026 11:59 pm -0700
+	countdown = Math.max(1, countdown);
+	$('.clock-builder-output').FlipClock(countdown, opts);
+});
+
+
+
 function initAuthCarousel() {
   const slides = document.querySelectorAll(".carousel-slide");
   const dots = document.querySelectorAll(".carousel-dot");
@@ -71,38 +86,54 @@ function initAuthCarousel() {
 
 function initTimer() {
   const timerContainer = document.getElementById("countdown-timer");
-  if (!timerContainer) return;
-
-  const daysEl = timerContainer.querySelector(".timer-days");
-  const hoursEl = timerContainer.querySelector(".timer-hours");
-  const minutesEl = timerContainer.querySelector(".timer-minutes");
-  const secondsEl = timerContainer.querySelector(".timer-seconds");
+  const popupTimerContainer = document.getElementById("popup-timer");
+  
+  if (!timerContainer && !popupTimerContainer) return;
 
   const duration = 48 * 60 * 60 * 1000; // 48 hours in milliseconds
 
   function updateTimer() {
     const now = Date.now();
-    // Calculate remaining time in the current 48-hour cycle based on Unix Epoch
-    // This creates a global loop without needing local storage
     const remaining = duration - (now % duration);
 
     const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+    const hoursTotal = Math.floor(remaining / (1000 * 60 * 60)); // For popup we might want total hours
     const hours = Math.floor(
       (remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
     );
     const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
 
-    daysEl.textContent = String(days).padStart(2, "0");
-    hoursEl.textContent = String(hours).padStart(2, "0");
-    minutesEl.textContent = String(minutes).padStart(2, "0");
-    secondsEl.textContent = String(seconds).padStart(2, "0");
+    // Update main timer if it exists
+    if (timerContainer) {
+      const daysEl = timerContainer.querySelector(".timer-days");
+      const hoursEl = timerContainer.querySelector(".timer-hours");
+      const minutesEl = timerContainer.querySelector(".timer-minutes");
+      const secondsEl = timerContainer.querySelector(".timer-seconds");
+      
+      if (daysEl) daysEl.textContent = String(days).padStart(2, "0");
+      if (hoursEl) hoursEl.textContent = String(hours).padStart(2, "0");
+      if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, "0");
+      if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, "0");
+    }
+
+    // Update popup timer if it exists
+    if (popupTimerContainer) {
+      const hoursEl = document.getElementById("popup-hours");
+      const minutesEl = document.getElementById("popup-minutes");
+      const secondsEl = document.getElementById("popup-seconds");
+      
+      if (hoursEl) hoursEl.textContent = String(hoursTotal).padStart(2, "0");
+      if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, "0");
+      if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, "0");
+    }
   }
 
   // Initial call to avoid delay
   updateTimer();
   setInterval(updateTimer, 1000);
 }
+
 
 function initFAQ() {
   const faqItems = document.querySelectorAll(".faq-item");
@@ -280,6 +311,9 @@ function initCalendar() {
     calendarContainer.appendChild(card);
   }
 }
+
+
+
 
 function handleVideoPreview() {
   const videoPreviews = document.querySelectorAll(".video-preview");
@@ -701,10 +735,6 @@ function handleVideoPreview() {
     }
   });
 }
-
-
-
-
 
 function initMobileMenu() {
   const hamburgerBtn = document.querySelector('[commandfor="mobile-menu"]');

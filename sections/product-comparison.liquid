@@ -1,0 +1,626 @@
+<section class="product-comparison" data-section-id="{{ section.id }}">
+  <div class="product-comparison__container">
+    
+    <!-- Header -->
+    <header class="product-comparison__header">
+      <h2 class="product-comparison__title">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="product-comparison__subtitle">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </header>
+
+    <!-- Category Tabs -->
+    {%- assign categories = '' -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'feature' -%}
+        {%- unless categories contains block.settings.category -%}
+          {%- if categories != '' -%}
+            {%- assign categories = categories | append: ',' -%}
+          {%- endif -%}
+          {%- assign categories = categories | append: block.settings.category -%}
+        {%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- assign category_array = categories | split: ',' -%}
+
+    {%- if category_array.size > 0 -%}
+      <nav class="product-comparison__tabs" role="tablist" aria-label="Feature categories">
+        {%- for category in category_array -%}
+          <button 
+            class="product-comparison__tab{% if forloop.first %} product-comparison__tab--active{% endif %}"
+            role="tab"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            data-category="{{ category | handleize }}"
+            type="button"
+          >
+            {{ category }}
+          </button>
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+
+    <!-- Products Grid -->
+    <div class="product-comparison__products">
+      {%- assign products = section.blocks | where: 'type', 'product' -%}
+      {%- for block in products -%}
+        <article class="product-comparison__product-card" {{ block.shopify_attributes }}>
+          <figure class="product-comparison__product-image-wrapper">
+            {%- if block.settings.product_image != blank -%}
+              {{ block.settings.product_image 
+                | image_url: width: 300 
+                | image_tag: 
+                    class: 'product-comparison__product-image', 
+                    alt: block.settings.product_name, 
+                    loading: 'lazy' 
+              }}
+            {%- else -%}
+              <div class="product-comparison__product-placeholder"></div>
+            {%- endif -%}
+          </figure>
+          <h3 class="product-comparison__product-name">{{ block.settings.product_name }}</h3>
+          {%- if block.settings.button_text != blank -%}
+            <a 
+              href="{{ block.settings.button_link }}" 
+              class="product-comparison__product-cta{% if block.settings.is_preorder %} product-comparison__product-cta--preorder{% endif %}"
+            >
+              {{ block.settings.button_text }}
+            </a>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="product-comparison__table-wrapper">
+      <table class="product-comparison__table" role="grid">
+        <thead class="product-comparison__table-head visually-hidden">
+          <tr>
+            <th scope="col">Feature</th>
+            {%- for block in products -%}
+              <th scope="col">{{ block.settings.product_name }}</th>
+            {%- endfor -%}
+          </tr>
+        </thead>
+        <tbody class="product-comparison__table-body">
+          {%- assign features = section.blocks | where: 'type', 'feature' -%}
+          {%- for feature in features -%}
+            <tr 
+              class="product-comparison__row" 
+              data-category="{{ feature.settings.category | handleize }}"
+              {{ feature.shopify_attributes }}
+            >
+              <th scope="row" class="product-comparison__feature-name">
+                {{ feature.settings.feature_name }}
+              </th>
+              {%- for i in (1..4) -%}
+                {%- assign value_key = 'product_' | append: i | append: '_value' -%}
+                {%- assign value = feature.settings[value_key] -%}
+                {%- assign highlight_key = 'product_' | append: i | append: '_highlight' -%}
+                {%- assign is_highlight = feature.settings[highlight_key] -%}
+                <td class="product-comparison__cell{% if is_highlight %} product-comparison__cell--highlight{% endif %}">
+                  {%- if value == 'check' -%}
+                    <span class="product-comparison__check" aria-label="Yes">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" fill="#36d363"/>
+                        <path d="M8 12.5L10.5 15L16 9.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  {%- elsif value == 'cross' -%}
+                    <span class="product-comparison__cross" aria-label="No">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" fill="#E0E0E0"/>
+                        <path d="M9 9L15 15M15 9L9 15" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
+                    </span>
+                  {%- elsif value != blank -%}
+                    <span class="product-comparison__value">{{ value }}</span>
+                  {%- else -%}
+                    <span class="product-comparison__empty" aria-label="Not applicable">—</span>
+                  {%- endif -%}
+                </td>
+              {%- endfor -%}
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Disclaimer -->
+    {%- if section.settings.disclaimer != blank -%}
+      <p class="product-comparison__disclaimer">{{ section.settings.disclaimer }}</p>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<style>
+/* ===== Product Comparison Section ===== */
+.product-comparison {
+  width: 100%;
+  padding: clamp(60px, 8vw, 100px) 0;
+  background-color: #fff;
+  font-family: inherit; /* Assumes Orbitron or similar wide sans-serif is used globally */
+}
+
+.product-comparison__container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 60px);
+}
+
+/* ===== Header ===== */
+.product-comparison__header {
+  text-align: center;
+  margin-bottom: clamp(40px, 5vw, 60px);
+}
+
+.product-comparison__title {
+  font-size: clamp(32px, 6vw, 64px);
+  font-weight: 900;
+  font-style: italic;
+  color: #000;
+  margin: 0 0 20px;
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+
+.product-comparison__subtitle {
+  font-size: clamp(14px, 1.6vw, 16px);
+  color: #333;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* ===== Category Tabs ===== */
+.product-comparison__tabs {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: clamp(60px, 8vw, 100px);
+  flex-wrap: wrap;
+}
+
+.product-comparison__tab {
+  padding: 14px 28px;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1.5px solid #0055ff;
+  border-radius: 50px;
+  background: #fff;
+  color: #0055ff;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-comparison__tab:hover {
+  background: #f0f4ff;
+}
+
+.product-comparison__tab--active {
+  background: #0055ff;
+  border-color: #0055ff;
+  color: #fff;
+}
+
+/* ===== Product Cards ===== */
+.product-comparison__products {
+  display: grid;
+  grid-template-columns: 35% repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 0;
+}
+
+/* Invisible filler for the first column in the product header grid */
+.product-comparison__products::before {
+  content: "";
+  display: block;
+}
+
+.product-comparison__product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.product-comparison__product-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 10px;
+}
+
+.product-comparison__product-image {
+  max-width: 100%;
+  max-height: 160px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.08));
+}
+
+.product-comparison__product-name {
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 900;
+  font-style: italic;
+  color: #000;
+  margin: 0 0 15px;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+}
+
+.product-comparison__product-cta {
+  display: inline-block;
+  width: 90%;
+  max-width: 160px;
+  padding: 12px 10px;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  text-decoration: none;
+  border-radius: 50px;
+  background: #0055ff;
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.product-comparison__product-cta:hover {
+  background: #0044cc;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 85, 255, 0.2);
+}
+
+.product-comparison__product-cta--preorder {
+  background: #0055ff; /* Image shows both Blue buttons, but slightly different text */
+}
+
+/* ===== Comparison Table ===== */
+.product-comparison__table-wrapper {
+  margin-top: 10px;
+}
+
+.product-comparison__table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.product-comparison__row {
+  border: none;
+}
+
+/* Row Backgrounds from Image */
+.product-comparison__row:nth-child(odd) {
+  background-color: #b7b7b7;
+}
+
+.product-comparison__row:nth-child(even) {
+  background-color: #dedede;
+}
+
+.product-comparison__row.is-hidden {
+  display: none;
+}
+
+.product-comparison__feature-name {
+  width: 35%;
+  padding: 24px 30px;
+  font-size: clamp(12px, 1.5vw, 15px);
+  font-weight: 950;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #000;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.product-comparison__cell {
+  padding: 24px 10px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: clamp(12px, 1.3vw, 14px);
+  font-weight: 800;
+  color: #000;
+}
+
+/* Bold/High Intensity Cells */
+.product-comparison__cell--highlight {
+  font-weight: 950;
+}
+
+.product-comparison__check svg {
+  width: 28px;
+  height: 28px;
+}
+
+.product-comparison__value {
+  text-transform: none; /* Keep units like 'Yards' mixed case or as entered */
+}
+
+/* ===== Disclaimer ===== */
+.product-comparison__disclaimer {
+  margin-top: 40px;
+  font-size: 11px;
+  font-weight: 600;
+  font-style: italic;
+  color: #333;
+  line-height: 1.5;
+  max-width: 1200px;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 1024px) {
+  .product-comparison__products {
+    grid-template-columns: 30% repeat(4, 1fr);
+  }
+  .product-comparison__feature-name {
+    width: 30%;
+    padding: 20px 15px;
+  }
+}
+
+@media (max-width: 860px) {
+  .product-comparison__products {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    gap: 20px;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .product-comparison__products::before { display: none; }
+  
+  .product-comparison__product-card {
+    flex: 0 0 180px;
+    scroll-snap-align: center;
+  }
+
+  .product-comparison__table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .product-comparison__table {
+    width: 800px; /* Force overflow for horizontal scroll of comparison data */
+  }
+
+  .product-comparison__feature-name {
+    width: 150px;
+    position: sticky;
+    left: 0;
+    background: inherit;
+    z-index: 2;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+  }
+}
+
+@media (max-width: 480px) {
+  .product-comparison__title {
+    font-size: 28px;
+  }
+  .product-comparison__tab {
+    padding: 10px 18px;
+    font-size: 11px;
+  }
+}
+</style>
+
+<script>
+(function() {
+  const section = document.querySelector('[data-section-id="{{ section.id }}"]');
+  if (!section) return;
+
+  const tabs = section.querySelectorAll('.product-comparison__tab');
+  const rows = section.querySelectorAll('.product-comparison__row');
+
+  if (tabs.length === 0) return;
+
+  // Initialize: Hide rows that don't belong to the first active tab
+  const activeTab = section.querySelector('.product-comparison__tab--active');
+  if (activeTab) {
+    const initialCategory = activeTab.dataset.category;
+    rows.forEach(row => {
+      if (row.dataset.category !== initialCategory) {
+        row.classList.add('is-hidden');
+      }
+    });
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Update active tab
+      tabs.forEach(t => {
+        t.classList.remove('product-comparison__tab--active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('product-comparison__tab--active');
+      tab.setAttribute('aria-selected', 'true');
+
+      // Filter rows
+      const selectedCategory = tab.dataset.category;
+      rows.forEach(row => {
+        const rowCategory = row.dataset.category;
+        if (rowCategory === selectedCategory) {
+          row.classList.remove('is-hidden');
+        } else {
+          row.classList.add('is-hidden');
+        }
+      });
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Product Comparison",
+  "tag": "section",
+  "class": "section-product-comparison",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Which Rangefinder is Right For You?"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "From fast, accurate optics to fully connected shot intelligence — compare our rangefinder lineup and choose the one that fits how you play."
+    },
+    {
+      "type": "textarea",
+      "id": "disclaimer",
+      "label": "Disclaimer Text",
+      "default": "* Features and functionality may vary by model. Bluetooth-connected features require the Blue Tees GAME App. Tournament mode disables slope functionality where required."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product Image"
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Product Name",
+          "default": "Series 3 Max+"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_preorder",
+          "label": "Pre-order Style",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "Feature Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category",
+          "default": "Hardware & Audio"
+        },
+        {
+          "type": "text",
+          "id": "feature_name",
+          "label": "Feature Name",
+          "default": "Magnification"
+        },
+        {
+          "type": "header",
+          "content": "Product 1 Value"
+        },
+        {
+          "type": "text",
+          "id": "product_1_value",
+          "label": "Value",
+          "info": "Enter 'check' for ✓, 'cross' for ✗, or any text value"
+        },
+        {
+          "type": "checkbox",
+          "id": "product_1_highlight",
+          "label": "Highlight Value",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Product 2 Value"
+        },
+        {
+          "type": "text",
+          "id": "product_2_value",
+          "label": "Value"
+        },
+        {
+          "type": "checkbox",
+          "id": "product_2_highlight",
+          "label": "Highlight Value",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Product 3 Value"
+        },
+        {
+          "type": "text",
+          "id": "product_3_value",
+          "label": "Value"
+        },
+        {
+          "type": "checkbox",
+          "id": "product_3_highlight",
+          "label": "Highlight Value",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Product 4 Value"
+        },
+        {
+          "type": "text",
+          "id": "product_4_value",
+          "label": "Value"
+        },
+        {
+          "type": "checkbox",
+          "id": "product_4_highlight",
+          "label": "Highlight Value",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Comparison",
+      "blocks": [
+        { "type": "product", "settings": { "product_name": "Series 3 Max+", "button_text": "Shop Now" } },
+        { "type": "product", "settings": { "product_name": "Series 4 Ultra", "button_text": "Shop Now" } },
+        { "type": "product", "settings": { "product_name": "Captain Air", "button_text": "Pre-Order Now", "is_preorder": false } },
+        { "type": "product", "settings": { "product_name": "Captain Pro", "button_text": "Pre-Order Now", "is_preorder": false } },
+        { "type": "feature", "settings": { "category": "Hardware & Audio", "feature_name": "Magnification", "product_1_value": "6X", "product_2_value": "6X", "product_3_value": "6X", "product_4_value": "7X", "product_4_highlight": true } },
+        { "type": "feature", "settings": { "category": "Hardware & Audio", "feature_name": "Display Type", "product_1_value": "LCD", "product_2_value": "OLED", "product_3_value": "OLED", "product_4_value": "OLED" } },
+        { "type": "feature", "settings": { "category": "Hardware & Audio", "feature_name": "Flag Lock + Pulse Vibration", "product_1_value": "check", "product_2_value": "check", "product_3_value": "check", "product_4_value": "check" } },
+        { "type": "feature", "settings": { "category": "Hardware & Audio", "feature_name": "Slope Switch", "product_1_value": "check", "product_2_value": "check", "product_3_value": "check", "product_4_value": "check" } },
+        { "type": "feature", "settings": { "category": "Hardware & Audio", "feature_name": "Max Range", "product_1_value": "900 Yards", "product_2_value": "1000 Yards", "product_3_value": "1000 Yards", "product_4_value": "1200 Yards", "product_4_highlight": true } },
+        { "type": "feature", "settings": { "category": "Hardware & Audio", "feature_name": "Waterproof Rating", "product_1_value": "IPX4", "product_2_value": "IPX4", "product_3_value": "IP65", "product_4_value": "IP65" } },
+        { "type": "feature", "settings": { "category": "Hardware & Audio", "feature_name": "Magnetic Mount", "product_1_value": "check", "product_2_value": "check", "product_3_value": "check", "product_4_value": "check" } },
+        { "type": "feature", "settings": { "category": "Hardware & Audio", "feature_name": "Battery", "product_1_value": "USB-C Rechargeable", "product_2_value": "Non-rechargeable", "product_3_value": "USB-C Rechargeable", "product_4_value": "USB-C Rechargeable" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

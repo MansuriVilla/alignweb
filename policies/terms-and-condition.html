@@ -26,10 +26,13 @@
   <body class="bg-beige-50 text-gray-900 font-sans">
     <header class="z-50 fixed w-full" data-header="sticky">
       <div class="bg-beige-500 py-2.5 sm:px-3.5 text-center">
-        <p class="text-sm/6 space-x-8 -tracking-tight">
-          <span href="javascript:void(0)" class="text-cocoa/70" >Join the waitlist</span>
-          <a href="javascript:void(0)" data-popup="membership" class="text-cocoa font-medium underline hover:no-underline">UNLOCK FOUNDERS RATE</a>
-        </p>
+    <div class="max-w-[1344px] mx-auto flex items-center justify-between px-6 lg:px-8 flex-col-reverse gap-2 lg:flex-row">
+        <div class="flex items-center gap-2 lg:gap-6">
+          <span href="javascript:void(0)" class="text-cocoa/70 text-sm">Join the App launch party.</span>
+          <a href="javascript:void(0)" data-popup="comingSoon" class="text-cocoa font-medium underline hover:no-underline text-sm">JOIN PARTY NOW!</a>
+        </div>
+        <div class="clock-builder-output"></div>
+      </div>
       </div>
 
       <nav aria-label="Global" class="z-10 w-full relative">
@@ -135,7 +138,7 @@
     </header>
 
     <main class="max-w-[1344px] mx-auto px-4 lg:px-0 py-6 sm:pt-6 sm:pb-[60px]  space-y-[60px] lg:space-y-[120px]">
-        <section class="bg-beige-100 rounded-xl lg:rounded-4xl w-full max-w-7xl mx-auto">
+        <section class="bg-beige-100 rounded-xl lg:rounded-4xl w-full max-w-7xl mx-auto mt-20">
             <div class="py-10 lg:py-20 px-5 lg:px-8 text-center">
                 <p class="rounded-full bg-beige-500 px-5 py-2 text-sm text-cocoa inline-flex gap-2">
                     Service Terms
@@ -622,6 +625,7 @@
     <script src="../scripts/lib/gsap.min.js" defer></script>
     <script src="../scripts/lib/SplitText.min.js" defer></script>
     <script src="../scripts/lib/ScrollTrigger.min.js" defer></script>
+<script src="../scripts/lib/flipclock.js" defer></script>
     <script src="../scripts/animation.js" defer></script>
     <script src="../scripts/core.js"></script>
   </body>
